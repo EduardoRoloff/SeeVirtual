@@ -23,11 +23,11 @@ import { ComandaPageModule } from '../pages/comanda/comanda.module';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
-  ],
+    TabsPage 
+],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp), 
     MesasPageModule,
     IntroPageModule,
     ComandaPageModule,
