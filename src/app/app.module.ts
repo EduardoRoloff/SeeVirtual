@@ -16,6 +16,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { MesasPageModule } from '../pages/mesas/mesas.module';
 import { IntroPageModule } from '../pages/intro/intro.module';
 import { ComandaPageModule } from '../pages/comanda/comanda.module';
+import { EmpresaProvider } from '../providers/empresa/empresa';
+import { ComandaProvider } from '../providers/comanda/comanda';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { ComandaPageModule } from '../pages/comanda/comanda.module';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    EmpresaProvider,
+    ComandaProvider
   ]
 })
 export class AppModule { }
