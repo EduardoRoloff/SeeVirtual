@@ -4,12 +4,16 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { LoginPage } from '../pages/login/login';
+import { CriarContaPage } from '../pages/criar-conta/criar-conta';
+import { ResetarSenhaPage } from '../pages/resetar-senha/resetar-senha';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,29 +21,32 @@ import { MesasPageModule } from '../pages/mesas/mesas.module';
 import { IntroPageModule } from '../pages/intro/intro.module';
 import { ComandaPageModule } from '../pages/comanda/comanda.module';
 
+import { ComandaServiceProvider } from '../providers/comanda-service/comanda-service';
+import { HomeServiceProvider } from '../providers/home-service/home-service';
+import { AutenticacaoServiceProvider } from '../providers/autenticacao-service/autenticacao-service';
+
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage 
-],
+    TabsPage,
+    LoginPage,
+    CriarContaPage,
+    ResetarSenhaPage
+  ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp), 
+    IonicModule.forRoot(MyApp),
     MesasPageModule,
     IntroPageModule,
     ComandaPageModule,
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyAHubPzRwdtsZ2bGeVGyU3BfAhKqt0M2XY",
-      authDomain: "seevirtualapp.firebaseapp.com",
-      databaseURL: "https://seevirtualapp.firebaseio.com",
-      projectId: "seevirtualapp",
-      storageBucket: "seevirtualapp.appspot.com",
-      messagingSenderId: "1004474068785"
-    }),
-    AngularFireDatabaseModule
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -47,12 +54,18 @@ import { ComandaPageModule } from '../pages/comanda/comanda.module';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    LoginPage,
+    CriarContaPage,
+    ResetarSenhaPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ComandaServiceProvider,
+    HomeServiceProvider,
+    AutenticacaoServiceProvider
   ]
 })
 export class AppModule { }

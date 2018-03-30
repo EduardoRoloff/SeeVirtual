@@ -1,17 +1,19 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home 1</ion-title>
+    <ion-title>See Vitual</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Comanda Virtual!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <!-- <ion-searchbar (ionInput)="getEmpresas($event)" placeholder="Onde você que ir?"></ion-searchbar> -->
+  <ion-searchbar (ionInput)="getEmpresas($event)" placeholder="Onde você que ir?"></ion-searchbar>
+  <ion-list>
+    <!-- <ion-item *ngFor="let empresa of empresasList">
+      {{empresa.razaoSocial}}
+    </ion-item> -->
+    <button ion-item *ngFor="let empresa of empresasList" (click)="abrirPagina(empresa)" icon-start>
+      <ion-icon [name]="'logo-' + empresa.logo" [ngStyle]="{'color': empresa.color}" item-start></ion-icon>
+      {{empresa.razaoSocial}}
+    </button>
+  </ion-list>
 </ion-content>
