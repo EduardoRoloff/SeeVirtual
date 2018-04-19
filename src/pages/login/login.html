@@ -6,23 +6,42 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <!-- <ion-navbar>
     <ion-title>Login</ion-title>
-  </ion-navbar>
+  </ion-navbar> -->
 
 </ion-header>
 
+<ion-content padding class="login-custom">
+  <form #form="ngForm" novalidate>
+    <h1>EiChefe!
+      <span>peça fácil</span>
+    </h1>
+    <ion-list>
+      <ion-item>
+        <ion-label floating style="color:white;">E-mail</ion-label>
+        <ion-input type="text" name="email" [(ngModel)]="usuario.email" #email="ngModel" required></ion-input>
+      </ion-item>
 
-<ion-content padding>
+      <ion-item>
+        <ion-label floating style="color:white;">Senha</ion-label>
+        <ion-input type="password" name="senha" [(ngModel)]="usuario.senha" #senha="ngModel" required></ion-input>
+      </ion-item>
 
-  <button ion-button block color="light" (click)="criarConta()">
-    Criar conta
-  </button>
+      <ion-item>
+        <button ion-button icon-start block [disabled]="!form.form.valid" (click)="logar()">
+          <ion-icon name='log-in'></ion-icon>
+          Entrar
+        </button>
 
-  <p text-center>Ou</p>
+        <button ion-button block (click)="criarConta()">
+          Criar Conta
+        </button>
 
-  <button ion-button block (click)="signInWithEmailPage()">
-    Entrar com e-mail e senha
-  </button>
-
+        <button ion-button block (click)="esqueciMinhaSenha()">
+          Esqueci minha senha
+        </button>
+      </ion-item>
+    </ion-list>
+  </form>
 </ion-content>

@@ -13,6 +13,22 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="login-custom">
+  <form #form="ngForm" novalidate>
+    <ion-list>
 
+      <ion-item>
+        <ion-label floating style="color:white;">E-mail</ion-label>
+        <ion-input type="text" name="email" [(ngModel)]="usuarioEmail" #email="ngModel" required></ion-input>
+      </ion-item>
+      <!-- <ion-item *ngIf="email.errors && (email.dirty || email.touched)" class="text-danger">
+        O campo é obrigatório
+      </ion-item> -->
+
+    </ion-list>
+
+    <button ion-button block color="bright" [disabled]="!form.form.valid" (click)="resetarSenha()">
+      Resetar minha senha
+    </button>
+  </form>
 </ion-content>

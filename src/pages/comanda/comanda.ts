@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ComandaServiceProvider } from '../../providers/comanda-service/comanda-service';
+import { IonicPage, NavController, NavParams, Platform, Item } from 'ionic-angular';
+import { Entity } from '../../app/models/entity';
 
 /**
  * Generated class for the ComandaPage page.
@@ -16,21 +15,29 @@ import { ComandaServiceProvider } from '../../providers/comanda-service/comanda-
   templateUrl: 'comanda.html',
 })
 export class ComandaPage {
-  // information: any[];
-  title: string;
-  form: FormGroup;
-  comanda: any;
+  empresa: Entity;
+  itensDaTela: Array<Item>[];
+  comanda: string = "comidas";
+  isAndroid: boolean = false;
 
   constructor(
-    public navCtrl: NavController, public navParams: NavParams) {
-  }
-  
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public platform: Platform) {
+    this.isAndroid = platform.is('android');
 
-  // toggleSection(i) {
-  //   this.information[i].open = !this.information[i].open;
-  // }
- 
-  // toggleItem(i, j) {
-  //   this.information[i].children[j].open = !this.information[i].children[j].open;
-  // }
+    this.empresa = navParams.data.empresa;
+  }
+
+  ngOnInit() {
+
+
+    this.itensDaTela = [];
+    for (let index = 0; index < 14; index++) {
+      this.itensDaTela.push(this.empresa.itens[index]);
+      console.log(this.empresa.itens[index]);
+    }
+  }
 }
+
+

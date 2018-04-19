@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 /*
   Generated class for the ComandaServiceProvider provider.
@@ -9,9 +9,17 @@ import { AngularFireDatabase } from 'angularfire2/database';
 */
 @Injectable()
 export class ComandaServiceProvider {
-  private PATH = 'comanda/';
+  
+  private PATH = 'empresas/itens';
+  itensList: AngularFireList<any[]>;
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase) { 
+  }
+
+  // getList(){
+  //   this.itensList = this.db.list(this.PATH);
+  //   return this.itensList;
+  // }
 
   //BUSCAR TODOS
   getAll() {

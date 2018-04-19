@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ComandaPage } from '../comanda/comanda';
 import { HomeServiceProvider } from '../../providers/home-service/home-service';
+import { Entity } from '../../app/models/entity';
 
 @Component({
   selector: 'page-home',
@@ -9,11 +10,12 @@ import { HomeServiceProvider } from '../../providers/home-service/home-service';
 })
 export class HomePage {
 
-  // public empresa: any;
-  // public empresas: AngularFireList<any[]>;
-  empresasList: any[];
+  empresasList: Entity[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private homeService: HomeServiceProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private homeService: HomeServiceProvider) {
   }
 
   ngOnInit(){
@@ -23,13 +25,13 @@ export class HomePage {
       item.forEach(element => {
         var empresaListada = element.payload.toJSON();
         empresaListada["$key"] = element.key;
-        this.empresasList.push(empresaListada);
+        this.empresasList.push(empresaListada as Entity);
       })
     })
   }
 
-  abrirPagina(){
-    this.navCtrl.push(ComandaPage);
+  abrirComanda(empresa){
+    this.navCtrl.push(ComandaPage, {empresa: empresa});
   }
 
 
@@ -41,10 +43,10 @@ export class HomePage {
     var val = ev.target.value;
 
     //if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.empresasList = this.empresasList.filter((item) => {
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
+    // if (val && val.trim() != '') {
+    //   this.empresasList = this.empresasList.filter((item) => {
+    //     return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+    //   })
+    // }
   }
 }

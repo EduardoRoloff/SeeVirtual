@@ -18,8 +18,16 @@ export class AutenticacaoServiceProvider {
     return this.angularFireAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha);
   }
 
-  logout(usuario: Usuario){
+  logar(usuario: Usuario){
+    return this.angularFireAuth.auth.signInWithEmailAndPassword(usuario.email, usuario.senha);
+  }
+
+  logout(){
     return this.angularFireAuth.auth.signOut();
+  }
+
+  resetarSenha(email: string){
+    return this.angularFireAuth.auth.sendPasswordResetEmail(email);
   }
 
 }

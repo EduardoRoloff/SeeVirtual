@@ -1,3 +1,41 @@
 page-login {
-
+  .login-custom {
+    background-color: #000;
+    background-image: url(/assets/images/4393.jpg);
+    background-size: cover;
+    background-position: center;
+  }
+  h1 {
+    font-family: 'Pacifico';
+    color: #fff;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 50px;
+  }
+  h1 span {
+    font-family: 'Roboto';
+    font-size: 18px;
+    position: absolute;
+    margin-top: 55px;
+    margin-left: -35px;
+  }
+  .list {
+    width: 90%;
+    margin: auto;
+    margin-top: 50px;
+  }
+  .item {
+    background: none;
+    border:none;
+  }
+  .item-md {
+    color: #fff;
+  }
+  .label-md[floating] {
+    color: white;
+  }
+  .scroll-content {
+    overflow-x: visible;
+    overflow-y: visible;
+  }
 }

@@ -7,15 +7,57 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Comanda</ion-title>
+    <ion-title>{{empresa.razaoSocial}}</ion-title>
   </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="comanda">
+      <ion-segment-button value="comidas">
+        Comidas
+      </ion-segment-button>
+      <ion-segment-button value="bebidas">
+        Bedidas
+      </ion-segment-button>
+      <ion-segment-button value="outros">
+        Outros
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
 </ion-header>
 
 
-<ion-content padding class=" cards-bg">
+<ion-content padding class="cards-bg">
+  <div [ngSwitch]="comanda">
+    <ion-list *ngSwitchCase="'comidas'">
+      <ion-item *ngFor="let item of itensDaTela">
+        <ion-thumbnail item-start>
+          <ion-img width="80" height="80" src={{item.imagem}}></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{item.descricao}}</h2>
+        </ion-label>
+        <ion-checkbox color="bright"></ion-checkbox>
+      </ion-item>
+    </ion-list>
 
-  <ion-card>
+    <ion-list *ngSwitchCase="'bebidas'">
+      <ion-item *ngFor="let item of itensList">
+        <ion-label>suco</ion-label>
+        <ion-checkbox color="bright"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'outros'">
+      <ion-item *ngFor="let item of itensList">
+        <ion-label>outros</ion-label>
+        <ion-checkbox color="bright"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+
+<!-- <ion-card>
     <ion-card-header>
       <ion-item>
         <ion-label floating>Nome</ion-label>
@@ -42,7 +84,4 @@
   <button ion-button color="blue" round icon-start>
     <ion-icon name='add' is-active="false"></ion-icon>
     Nova Comanda
-  </button>
-
-
-</ion-content>
+  </button> -->
