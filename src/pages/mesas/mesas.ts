@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ComandaPage } from '../comanda/comanda';
+import { Empresa } from '../../models/empresa';
+import { Mesa } from '../../models/mesa';
+import { ServicosProvider } from '../../providers/servicos/servicos';
 
 /**
  * Generated class for the MesasPage page.
@@ -15,22 +18,26 @@ import { ComandaPage } from '../comanda/comanda';
   templateUrl: 'mesas.html',
 })
 export class MesasPage {
-  public nome_usuario:string = "X-Tudo Código";
+  empresaSelecionada: Empresa;
+  mesas: Mesa[];
+
 
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams) {
-  }
+    public navParams: NavParams,
+    private servico: ServicosProvider
+  ) {
 
-  public somaDoisNumeros(num1:number, num2:number): void{
-    // alert(num1 + num2);
+    this.mesas = new Array<Mesa>();
+    this.servico.empresaSelecionda;
   }
 
   ionViewDidLoad() {
-    // this.somaDoisNumeros(10, 90);
   }
 
-  abrirComanda(){
-    this.navCtrl.push(ComandaPage)
+  abrirComanda(mesa: Mesa){
+    this.servico.selecionarMesa(mesa);
+    this.navCtrl.push(ComandaPage, {empresa: this.servico.empresaSelecionda.itens});
   }
+  
 }

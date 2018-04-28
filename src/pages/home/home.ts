@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ComandaPage } from '../comanda/comanda';
-import { HomeServiceProvider } from '../../providers/home-service/home-service';
-import { Entity } from '../../app/models/entity';
+import { ServicosProvider } from '../../providers/servicos/servicos';
+import { Empresa } from '../../models/empresa';
+import { MesasPage } from '../mesas/mesas';
 
 @Component({
   selector: 'page-home',
@@ -10,43 +10,29 @@ import { Entity } from '../../app/models/entity';
 })
 export class HomePage {
 
-  empresasList: Entity[];
+  empresasList: any[];
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    private homeService: HomeServiceProvider) {
+    private servicos: ServicosProvider) {
   }
 
   ngOnInit(){
-    var empresa = this.homeService.getList();
+    var empresa = this.servicos.getList();
     empresa.snapshotChanges().subscribe(item => {
       this.empresasList = [];
       item.forEach(element => {
         var empresaListada = element.payload.toJSON();
         empresaListada["$key"] = element.key;
-        this.empresasList.push(empresaListada as Entity);
+        this.empresasList.push(empresaListada as Empresa);
       })
     })
   }
 
   abrirComanda(empresa){
-    this.navCtrl.push(ComandaPage, {empresa: empresa});
+    this.servicos.buscarEmpresaSelecionada(empresa);
+    this.navCtrl.push(MesasPage);
   }
-
-
-  getEmpresas(ev) {
-    // Reset items back to all of the items
-    this.homeService.getList();
-
-    //set val to the value of the ev target
-    var val = ev.target.value;
-
-    //if the value is an empty string don't filter the items
-    // if (val && val.trim() != '') {
-    //   this.empresasList = this.empresasList.filter((item) => {
-    //     return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-    //   })
-    // }
-  }
+  
 }

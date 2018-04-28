@@ -11,23 +11,47 @@ import { Usuario } from './usuario';
 @Injectable()
 export class AutenticacaoServiceProvider {
 
+  private usuario: Usuario;
+
   constructor(private angularFireAuth: AngularFireAuth) {
+    this.usuario = new Usuario();
+    this.statusDoUsuario();
   }
 
-  criarUsuario(usuario: Usuario){
-    return this.angularFireAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha);
+  obterUsuarioLogado() {
+    return this.usuario;
   }
 
-  logar(usuario: Usuario){
-    return this.angularFireAuth.auth.signInWithEmailAndPassword(usuario.email, usuario.senha);
+  criarUsuario(usuario: Usuario) {
+    return new Promise((resolve, reject) => {
+      this.angularFireAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
+        .then((usuario) => {
+          resolve(usuario);
+        })
+    })
   }
 
-  logout(){
+  logar(usuario: Usuario) {
+    return new Promise((resolve, reject) => {
+      this.angularFireAuth.auth.signInWithEmailAndPassword(usuario.email, usuario.senha)
+        .then((usuario) => {
+          resolve(usuario);
+        })
+    })
+  }
+
+  logout() {
     return this.angularFireAuth.auth.signOut();
   }
 
-  resetarSenha(email: string){
+  resetarSenha(email: string) {
     return this.angularFireAuth.auth.sendPasswordResetEmail(email);
   }
 
+
+  statusDoUsuario() {
+    this.angularFireAuth.auth.onAuthStateChanged(usuario => {
+      this.usuario.email = usuario.email;
+    });
+  }
 }

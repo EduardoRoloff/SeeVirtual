@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- <ion-searchbar (ionInput)="getEmpresas($event)" placeholder="Onde você que ir?"></ion-searchbar> -->
   <ion-searchbar (ionInput)="getEmpresas($event)" placeholder="Onde você que ir?"></ion-searchbar>
   <ion-list *ngFor="let empresa of empresasList">
     <button ion-item (click)="abrirComanda(empresa)" icon-start>

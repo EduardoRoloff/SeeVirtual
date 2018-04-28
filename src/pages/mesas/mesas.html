@@ -14,39 +14,16 @@
 
 
 <ion-content padding>
-  <ion-list>
+  <ion-label color="bright"><h4>Selecione a mesa que você está?</h4></ion-label>
+  <ion-list *ngFor="let mesa of servico.empresaSelecionda.mesas">
     <ion-item>
-      <ion-thumbnail item-start>
-        <img src="../../assets/images/avatar.png">
-      </ion-thumbnail>
       <ion-label>
-          <h2>Mesa 01</h2>
-          <p>Fechada</p> 
+        <h2>Mesa: {{mesa.numero}}</h2>
       </ion-label>
-      <ion-toggle checked="false"></ion-toggle>
-      <button ion-button clear item-end (click)="abrirComanda()">Comanda</button>
-    </ion-item>
-    <ion-item>
-      <ion-thumbnail item-start>
-        <img src="../../assets/images/avatar.png">
-      </ion-thumbnail>
-      <ion-label>
-          <h2>Mesa 01</h2>
-          <p>Fechada</p> 
-      </ion-label>
-      <ion-toggle checked="false"></ion-toggle>
-      <button ion-button clear item-end (click)="abrirComanda()">Comanda</button>
-    </ion-item>
-    <ion-item>
-      <ion-thumbnail item-start>
-        <img src="../../assets/images/avatar.png">
-      </ion-thumbnail>
-      <ion-label>
-          <h2>Mesa 01</h2>
-          <p>Fechada</p> 
-      </ion-label>
-      <ion-toggle checked="false"></ion-toggle>
-      <button ion-button clear item-end (click)="abrirComanda()">Comanda</button>
+      <button ion-button item-end icon-start (click)="abrirComanda(mesa)">
+        <ion-icon name='book'></ion-icon>
+        Fazer Pedido
+      </button>
     </ion-item>
   </ion-list>
 </ion-content>

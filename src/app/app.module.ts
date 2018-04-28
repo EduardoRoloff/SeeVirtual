@@ -22,7 +22,7 @@ import { IntroPageModule } from '../pages/intro/intro.module';
 import { ComandaPageModule } from '../pages/comanda/comanda.module';
 
 import { ComandaServiceProvider } from '../providers/comanda-service/comanda-service';
-import { HomeServiceProvider } from '../providers/home-service/home-service';
+import { ServicosProvider } from '../providers/servicos/servicos';
 import { AutenticacaoServiceProvider } from '../providers/autenticacao-service/autenticacao-service';
 
 import { environment } from '../environments/environment';
@@ -64,7 +64,7 @@ import { environment } from '../environments/environment';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ComandaServiceProvider,
-    HomeServiceProvider,
+    ServicosProvider,
     AutenticacaoServiceProvider
   ]
 })
