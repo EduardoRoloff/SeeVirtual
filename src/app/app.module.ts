@@ -26,6 +26,7 @@ import { ServicosProvider } from '../providers/servicos/servicos';
 import { AutenticacaoServiceProvider } from '../providers/autenticacao-service/autenticacao-service';
 
 import { environment } from '../environments/environment';
+import { ConfirmarPedidoPageModule } from '../pages/confirmar-pedido/confirmar-pedido.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { environment } from '../environments/environment';
     MesasPageModule,
     IntroPageModule,
     ComandaPageModule,
+    ConfirmarPedidoPageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule

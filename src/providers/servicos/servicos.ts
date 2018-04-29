@@ -19,12 +19,19 @@ export class ServicosProvider {
   mesaSelecionada: Mesa;
   empresaSelecionda: Empresa;
 
-  constructor(private db: AngularFireDatabase, private autenticacao: AutenticacaoServiceProvider) {
+  constructor(private db: AngularFireDatabase) {
   }
 
   alterarMesa(mesa: Mesa) {
-    let path = 'empresas/' + this.empresaSelecionda.$key + '/mesas/' + (+mesa.numero -1);
-    this.db.object(path).set({...mesa});
+    if (!mesa.pedidos) {
+      return;
+    }
+    if (!mesa.emAberto) {
+      mesa.emAberto = true;
+    }
+    let posicao = parseInt(mesa.numero);
+    let path = 'empresas/' + this.empresaSelecionda.$key + '/mesas/' + posicao;
+    this.db.object(path).set({ ...mesa });
   }
 
   buscarEmpresaSelecionada(empresa: Empresa) {
@@ -47,11 +54,17 @@ export class ServicosProvider {
   }
 
   selecionarMesa(mesa: Mesa) {
+    let list = Array<Mesa>();
+    list = [];
     var starCountRef = this.db.database.ref('empresas/' + this.empresaSelecionda.$key + '/mesas')
       .orderByChild("numero").equalTo(mesa.numero);
     starCountRef.on('value', (snapshot) => {
       this.mesasDoBanco = snapshot.val();
-      this.mesaSelecionada = this.mesasDoBanco[0];
+      let numeroDaMesa = parseInt(mesa.numero);
+      let item = snapshot.val()[numeroDaMesa - 1];
+      list.push(item as Mesa);
+      this.mesaSelecionada = list[0];
+      this.mesaSelecionada.emAberto = true;
     });
   }
 

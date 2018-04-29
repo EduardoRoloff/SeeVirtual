@@ -6,6 +6,7 @@ import { ServicosProvider } from '../../providers/servicos/servicos';
 import { ItemPedido } from '../../models/itemPedido';
 import { Pedido } from '../../models/pedido';
 import { AutenticacaoServiceProvider } from '../../providers/autenticacao-service/autenticacao-service';
+import { ConfirmarPedidoPage } from '../confirmar-pedido/confirmar-pedido';
 
 /**
  * Generated class for the ComandaPage page.
@@ -26,7 +27,7 @@ const tipos = {
   templateUrl: 'comanda.html',
 })
 export class ComandaPage {
-  
+
   empresaSelecionada: Empresa;
   itensDoPedidos: Array<ItemPedido>;
   comidas: Array<ItemPedido>;
@@ -68,7 +69,7 @@ export class ComandaPage {
             this.comidas.push(itemPedido);
             break;
           case tipos.BEBIDA:
-            this.bebidas.push(itemPedido);
+            this.bebidas.push(itemPedido); 
             break;
           case tipos.OUTROS:
           default:
@@ -100,15 +101,15 @@ export class ComandaPage {
     }
   }
 
-  confirmarPedido(){
+  confirmarPedido() {
     let pedido = new Pedido();
     if (!this.servicos.mesaSelecionada.pedidos) {
-      this.servicos.mesaSelecionada.pedidos = [];  
+      this.servicos.mesaSelecionada.pedidos = [];
     }
     pedido.itens = [];
 
-   pedido.itens = [
-      ...this.comidas, 
+    pedido.itens = [
+      ...this.comidas,
       ...this.bebidas,
       ...this.outros
     ].filter(i => i.escolhido);
@@ -117,6 +118,7 @@ export class ComandaPage {
     pedido.horaDoPedido = new Date();
     pedido.pedidoEmAberto = true;
     this.servicos.mesaSelecionada.pedidos.push(pedido);
-    this.servicos.alterarMesa(this.servicos.mesaSelecionada)
+    this.navCtrl.push(ConfirmarPedidoPage);
+    // this.servicos.alterarMesa(this.servicos.mesaSelecionada);
   }
 }
