@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Mesa } from '../../models/mesa';
 import { Empresa } from '../../models/empresa';
-import { AutenticacaoServiceProvider } from '../autenticacao-service/autenticacao-service';
 
 /*
   Generated class for the HomeServiceProvider provider.
@@ -29,7 +28,7 @@ export class ServicosProvider {
     if (!mesa.emAberto) {
       mesa.emAberto = true;
     }
-    let posicao = parseInt(mesa.numero);
+    let posicao = parseInt(mesa.numero) - 1;
     let path = 'empresas/' + this.empresaSelecionda.$key + '/mesas/' + posicao;
     this.db.object(path).set({ ...mesa });
   }
