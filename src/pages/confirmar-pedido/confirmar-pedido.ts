@@ -42,24 +42,25 @@ export class ConfirmarPedidoPage {
   }
 
   listarPedidos() {
-    this.itemDoPedido = this.servicos.mesaSelecionada.pedidos[0].itens;
+    this.itemDoPedido = this.servicos.pedidoSeleciondado.itens;
 
     this.itemDoPedido.forEach(element => {
       switch (element.item.tipo.toLowerCase()) {
         case tipos.COMIDA: 
-          this.comidas.push(element.item);
+          this.comidas.push(element);
           break;
         case tipos.BEBIDA:
-          this.bebidas.push(element.item);
+          this.bebidas.push(element);
           break;
         case tipos.OUTROS: 
         default:
-          this.outros.push(element.item);
+          this.outros.push(element);
       }
     });
   }
 
   enviarPedido() {
-    this.servicos.alterarMesa(this.servicos.mesaSelecionada);
+    this.servicos.alterarMesa(this.servicos.pedidoSeleciondado);
+    alert('Pedido enviado com sucesso!');
   }
 }
