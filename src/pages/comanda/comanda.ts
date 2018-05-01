@@ -37,6 +37,7 @@ export class ComandaPage {
   isAndroid: boolean = false;
   qtdItens = 0;
   selecionado = false;
+  algumItemSelecionado:boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -102,22 +103,29 @@ export class ComandaPage {
   }
 
   confirmarPedido() {
-    let pedido = new Pedido();
-    if (!this.servicos.mesaSelecionada.pedidos) {
-      this.servicos.mesaSelecionada.pedidos = [];
-    }
-    pedido.itens = [];
-
-    pedido.itens = [
+   
+    let itens = [
       ...this.comidas,
       ...this.bebidas,
       ...this.outros
     ].filter(i => i.escolhido);
+   
+    if(!this.servicos.pedidoSeleciondado){
+      this.servicos.pedidoSeleciondado = new Pedido();
+    }
 
-    pedido.emailDoCliente = this.autenticacaoService.obterUsuarioLogado().email;
-    pedido.horaDoPedido = new Date();
-    pedido.pedidoEmAberto = true;
-    this.servicos.mesaSelecionada.pedidos.push(pedido);
+    this.servicos.pedidoSeleciondado.itens.push(itens.pop());
+
+    if(this.servicos.pedidoSeleciondado.itens.length == 0){
+        alert('Não foi selecionado nenhum item!')
+        return;
+    }
+
+     this.servicos.pedidoSeleciondado.emailDoCliente = this.autenticacaoService.obterUsuarioLogado().email;
+     this.servicos.pedidoSeleciondado.horaDoPedido = new Date();
+     this.servicos.pedidoSeleciondado.mesa = this.servicos.mesaSelecionada.numero;
+     this.servicos.pedidoSeleciondado.pedidoEmAberto = true;
+
     this.navCtrl.push(ConfirmarPedidoPage);
     // this.servicos.alterarMesa(this.servicos.mesaSelecionada);
   }

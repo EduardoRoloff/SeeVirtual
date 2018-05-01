@@ -19,17 +19,23 @@ import { ServicosProvider } from '../../providers/servicos/servicos';
 })
 export class MesasPage {
   empresaSelecionada: Empresa;
-  mesas: Mesa[];
+  mesas: Mesa[] = [];
 
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,  
     public navParams: NavParams,
     private servico: ServicosProvider
   ) {
-
+    
     this.mesas = new Array<Mesa>();
     this.servico.empresaSelecionda;
+    for (let index = 0; index <  this.servico.empresaSelecionda.quantidadeDeMesas; index++) {
+      var novaMesa = new Mesa();
+      novaMesa.numero = ''+index;
+      this.mesas.push(novaMesa);
+      
+    }
   }
 
   ionViewDidLoad() {

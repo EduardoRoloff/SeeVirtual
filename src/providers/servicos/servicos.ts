@@ -3,6 +3,11 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Mesa } from '../../models/mesa';
 import { Empresa } from '../../models/empresa';
 
+import { Pedido } from '../../models/pedido';
+import { PedidoEmAndaento } from '../../models/pedidoEmAndamento';
+import { v1 } from 'uuid';
+import { AutenticacaoServiceProvider } from '../autenticacao-service/autenticacao-service';
+
 /*
   Generated class for the HomeServiceProvider provider.
 
@@ -16,26 +21,30 @@ export class ServicosProvider {
   private PATH = 'empresas';
   empresasList: AngularFireList<any[]>;
   mesaSelecionada: Mesa;
+  pedidoSeleciondado: Pedido;
+  pedidoEmAndamento: PedidoEmAndaento;
   empresaSelecionda: Empresa;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase, private servicoLogin: AutenticacaoServiceProvider) {
   }
 
-  alterarMesa(mesa: Mesa) {
-    if (!mesa.pedidos) {
+  alterarMesa(pedido: Pedido) {
+    if (!pedido) {
       return;
     }
-    if (!mesa.emAberto) {
-      mesa.emAberto = true;
+
+    if (!pedido.pedidoEmAberto) {
+      pedido.pedidoEmAberto = true;
     }
-    let posicao = parseInt(mesa.numero) - 1;
-    let path = 'empresas/' + this.empresaSelecionda.$key + '/mesas/' + posicao;
-    this.db.object(path).set({ ...mesa });
+    pedido.numeroDoPedido = v1();
+    let path = 'empresas/' + this.empresaSelecionda.$key + '/pedidos';
+    this.db.object(path).set({ ...pedido });
   }
 
   buscarEmpresaSelecionada(empresa: Empresa) {
     let list = Array<Empresa>();
     list = [];
+
     let ref = this.db.database
       .ref("empresas")
       .orderByKey()
@@ -44,7 +53,11 @@ export class ServicosProvider {
         item.$key = snapshot.key;
         list.push(item as Empresa)
         this.empresaSelecionda = list[0];
+        this.obterPedidosDoUsuarioLogado();
       });
+  }
+  obterPedidosDoUsuarioLogado() {
+
   }
 
   getList() {
@@ -53,18 +66,8 @@ export class ServicosProvider {
   }
 
   selecionarMesa(mesa: Mesa) {
-    let list = Array<Mesa>();
-    list = [];
-    var starCountRef = this.db.database.ref('empresas/' + this.empresaSelecionda.$key + '/mesas')
-      .orderByChild("numero").equalTo(mesa.numero);
-    starCountRef.on('value', (snapshot) => {
-      this.mesasDoBanco = snapshot.val();
-      let numeroDaMesa = parseInt(mesa.numero);
-      let item = snapshot.val()[numeroDaMesa - 1];
-      list.push(item as Mesa);
-      this.mesaSelecionada = list[0];
-      this.mesaSelecionada.emAberto = true;
-    });
+    this.mesaSelecionada = mesa;
+
   }
 
   finalizarPedido() {

@@ -16,17 +16,38 @@
 <ion-content padding>
   <ion-item-group *ngFor="let itensPedidos of comidas">
     <ion-item-divider color="light">Comida</ion-item-divider>
-    <ion-item>{{itensPedidos.descricao}}</ion-item>
+    <ion-item>
+    <ion-label>
+         {{itensPedidos.item.descricao}} 
+      </ion-label>
+      <ion-label>
+         {{itensPedidos.quantidade}} 
+      </ion-label>
+    </ion-item>
   </ion-item-group>
 
   <ion-item-group *ngFor="let itensPedidos of bedidas">
     <ion-item-divider color="light">Bedida</ion-item-divider>
-    <ion-item>{{itensPedidos.descricao}}</ion-item>
+    <ion-item>
+      <ion-label>
+         {{itensPedidos.item.descricao}} 
+      </ion-label>
+      <ion-label>
+         {{itensPedidos.quantidade}} 
+      </ion-label>
+    </ion-item>
   </ion-item-group>
 
   <ion-item-group *ngFor="let itensPedidos of outros">
     <ion-item-divider color="light">Outros</ion-item-divider>
-    <ion-item>{{itensPedidos.descricao}}</ion-item>
+    <ion-item>
+    <ion-label>
+         {{itensPedidos.item.descricao}} 
+      </ion-label>
+      <ion-label>
+         {{itensPedidos.quantidade}} 
+      </ion-label>
+    </ion-item>
   </ion-item-group>
 
   <button ion-button color="secondary" small (click)="enviarPedido()">
