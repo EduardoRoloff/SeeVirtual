@@ -1,6 +1,7 @@
 import { Login } from "./login";
 import { Item } from "./item";
 import { Mesa } from './mesa';
+import { Pedido } from './pedidos';
 
 export class Empresa {
 
@@ -20,7 +21,7 @@ export class Empresa {
     logo: string;
     itens: Item[];
     quantidadeDeMesas: number;
-    mesas: Mesa[];
+    pedidos:Pedido[];
 
     constructor() {
         this.telefones = new Array;

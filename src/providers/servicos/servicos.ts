@@ -17,28 +17,13 @@ import { AutenticacaoServiceProvider } from '../autenticacao-service/autenticaca
 @Injectable()
 export class ServicosProvider {
 
-  mesasDoBanco: AngularFireList<any[]>;
   private PATH = 'empresas';
   empresasList: AngularFireList<any[]>;
   mesaSelecionada: Mesa;
-  pedidoSeleciondado:Pedido;
   pedidoEmAndamento: PedidoEmAndaento;
   empresaSelecionda: Empresa;
 
   constructor(private db: AngularFireDatabase,private servicoLogin: AutenticacaoServiceProvider) {
-  }
-
-  alterarMesa(pedido: Pedido) {
-    if (!pedido) {
-      return;
-    }
-
-    if (!pedido.pedidoEmAberto) {
-      pedido.pedidoEmAberto = true;
-    }
-    pedido.numeroDoPedido = v1();
-    let path = 'empresas/' + this.empresaSelecionda.$key + '/pedidos';
-    this.db.object(path).set({ ...pedido });
   }
 
   alterarPedido(){
@@ -62,12 +47,9 @@ export class ServicosProvider {
         item.$key = snapshot.key;
         list.push(item as Empresa)
         this.empresaSelecionda = list[0];
-        this.obterPedidosDoUsuarioLogado();
       });
   }
-  obterPedidosDoUsuarioLogado(){
-    
-  }
+
 
   getList() {
     this.empresasList = this.db.list(this.PATH);
@@ -78,7 +60,27 @@ export class ServicosProvider {
     this.mesaSelecionada = mesa;
     
   }
+  
+  inserirPedido(pedido: Pedido) {
 
-  finalizarPedido() {
+    if (!pedido) {
+      return;
+    }
+
+    if (!pedido.pedidoEmAberto) {
+      pedido.pedidoEmAberto = true;
+    }
+
+    if(this.pedidoEmAndamento){
+      this.empresaSelecionda.pedidos = [];
+     }
+
+
+    pedido.numeroDoPedido = v1();
+    this.empresaSelecionda.pedidos.push(pedido);
+    let path = 'empresas/' + this.empresaSelecionda.$key + '/pedidos/'+pedido.numeroDoPedido;
+    this.db.object(path).set({ ...pedido});
   }
+
+
 }

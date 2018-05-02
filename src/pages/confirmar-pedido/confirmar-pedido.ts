@@ -60,7 +60,7 @@ export class ConfirmarPedidoPage {
   }
 
   enviarPedido() {
-    this.servicos.alterarMesa(this.servicos.pedidoSeleciondado);
+    this.servicos.inserirPedido(this.servicos.pedidoSeleciondado);
     alert('Pedido enviado com sucesso!');
   }
 }
