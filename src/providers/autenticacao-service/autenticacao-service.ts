@@ -11,6 +11,7 @@ import { Usuario } from './usuario';
 @Injectable()
 export class AutenticacaoServiceProvider {
 
+  
   private usuario: Usuario;
 
   constructor(private angularFireAuth: AngularFireAuth) {
@@ -18,7 +19,7 @@ export class AutenticacaoServiceProvider {
     this.statusDoUsuario();
   }
 
-  obterUsuarioLogado() {
+  obterUsuarioLogado():Usuario {
     return this.usuario;
   }
 
@@ -48,7 +49,7 @@ export class AutenticacaoServiceProvider {
     return this.angularFireAuth.auth.sendPasswordResetEmail(email);
   }
 
-
+ 
   statusDoUsuario() {
     this.angularFireAuth.auth.onAuthStateChanged(usuario => {
       this.usuario.email = usuario.email;

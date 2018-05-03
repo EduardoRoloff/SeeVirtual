@@ -1,7 +1,7 @@
 import { Login } from "./login";
 import { Item } from "./item";
 import { Mesa } from './mesa';
-import { Pedido } from './pedidos';
+import { Pedido } from './pedido';
 
 export class Empresa {
 

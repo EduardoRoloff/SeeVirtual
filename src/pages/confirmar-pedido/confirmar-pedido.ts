@@ -42,7 +42,7 @@ export class ConfirmarPedidoPage {
   }
 
   listarPedidos() {
-    this.itemDoPedido = this.servicos.pedidoSeleciondado.itens;
+    this.itemDoPedido = this.servicos.pedidoEmAndamento.itens;
 
     this.itemDoPedido.forEach(element => {
       switch (element.item.tipo.toLowerCase()) {
@@ -60,7 +60,7 @@ export class ConfirmarPedidoPage {
   }
 
   enviarPedido() {
-    this.servicos.inserirPedido(this.servicos.pedidoSeleciondado);
+    this.servicos.inserirPedido();
     alert('Pedido enviado com sucesso!');
   }
 }

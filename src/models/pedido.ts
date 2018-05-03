@@ -5,9 +5,9 @@ export class Pedido {
     /**
      *
      */
-    constructor() {
+    constructor(emailLogado: string) {
         this.itens = [];
-        
+        this.emailDoCliente = emailLogado;
     }
 
     numeroDoPedido: string;

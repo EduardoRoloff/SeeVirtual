@@ -4,6 +4,7 @@ import { AutenticacaoServiceProvider } from '../../providers/autenticacao-servic
 import { Usuario } from '../../providers/autenticacao-service/usuario';
 import { NgForm } from '@angular/forms';
 import { HomePage } from '../home/home';
+import { ServicosProvider } from '../../providers/servicos/servicos';
 
 /**
  * Generated class for the CriarContaPage page.
@@ -25,7 +26,8 @@ export class CriarContaPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private toastCtrl: ToastController,
-    private autenticacaoService: AutenticacaoServiceProvider) {
+    private autenticacaoService: AutenticacaoServiceProvider,
+    private servicos: ServicosProvider,) {
   }
 
   criarConta(){
@@ -35,7 +37,7 @@ export class CriarContaPage {
       this.autenticacaoService.criarUsuario(this.usuario)
         .then((usuario: any) =>{
           usuario.sendEmailVerification();
-
+          this.servicos.salvarCliente(this.usuario.email);
           toats.setMessage('Usuário criado com sucesso');
           toats.present();//EXIBIR O TOATS
 

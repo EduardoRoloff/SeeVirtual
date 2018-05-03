@@ -110,21 +110,18 @@ export class ComandaPage {
       ...this.outros
     ].filter(i => i.escolhido);
    
-    if(!this.servicos.pedidoSeleciondado){
-      this.servicos.pedidoSeleciondado = new Pedido();
-    }
 
-    this.servicos.pedidoSeleciondado.itens.push(itens.pop());
+    this.servicos.pedidoEmAndamento.itens.push(itens.pop());
 
-    if(this.servicos.pedidoSeleciondado.itens.length == 0){
+    if(this.servicos.pedidoEmAndamento.itens.length == 0){
         alert('Não foi selecionado nenhum item!')
         return;
     }
 
-     this.servicos.pedidoSeleciondado.emailDoCliente = this.autenticacaoService.obterUsuarioLogado().email;
-     this.servicos.pedidoSeleciondado.horaDoPedido = new Date();
-     this.servicos.pedidoSeleciondado.mesa = this.servicos.mesaSelecionada.numero;
-     this.servicos.pedidoSeleciondado.pedidoEmAberto = true;
+     this.servicos.pedidoEmAndamento.emailDoCliente = this.autenticacaoService.obterUsuarioLogado().email;
+     this.servicos.pedidoEmAndamento.horaDoPedido = new Date();
+     this.servicos.pedidoEmAndamento.mesa = this.servicos.mesaSelecionada.numero;
+     this.servicos.pedidoEmAndamento.pedidoEmAberto = true;
 
     this.navCtrl.push(ConfirmarPedidoPage);
     // this.servicos.alterarMesa(this.servicos.mesaSelecionada);
