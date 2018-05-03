@@ -41,13 +41,11 @@
             {{itemPedido.item.descricao}}
             <ion-checkbox color="bright" [(ngModel)]="itemPedido.escolhido" (click)="selecionarItem(itemPedido)"></ion-checkbox>
           </ion-card-title>
-          <ion-item>
-            <ion-label>Observação</ion-label>
-            <ion-textarea [(ngModel)]="itemPedido.observacao" name="observacao"></ion-textarea>
-          </ion-item>
         </ion-card-content>
-
-        <ion-row no-padding>
+        <ion-item>
+          <ion-textarea [(ngModel)]="itemPedido.observacao" placeholder="Adicione uma observação:" name="observacao"></ion-textarea>
+        </ion-item>
+        <ion-row no-padding> 
           <ion-col text-left>
             <button ion-button color="bright" outline icon-only (click)="adicionarMaisItem(itemPedido)">
               <ion-icon name='add-circle' is-active="false">{{itemPedido.quantidade}}</ion-icon>

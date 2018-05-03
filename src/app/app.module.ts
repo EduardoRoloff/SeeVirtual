@@ -27,6 +27,8 @@ import { AutenticacaoServiceProvider } from '../providers/autenticacao-service/a
 
 import { environment } from '../environments/environment';
 import { ConfirmarPedidoPageModule } from '../pages/confirmar-pedido/confirmar-pedido.module';
+import { StatusPedidoPageModule } from '../pages/status-pedido/status-pedido.module';
+import { StatusPedidoPage } from '../pages/status-pedido/status-pedido';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { ConfirmarPedidoPageModule } from '../pages/confirmar-pedido/confirmar-p
     IntroPageModule,
     ComandaPageModule,
     ConfirmarPedidoPageModule,
+    StatusPedidoPageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule
@@ -59,7 +62,8 @@ import { ConfirmarPedidoPageModule } from '../pages/confirmar-pedido/confirmar-p
     TabsPage,
     LoginPage,
     CriarContaPage,
-    ResetarSenhaPage
+    ResetarSenhaPage,
+    StatusPedidoPage
   ],
   providers: [
     StatusBar,

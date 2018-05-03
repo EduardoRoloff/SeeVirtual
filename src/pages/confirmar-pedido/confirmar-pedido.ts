@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { ServicosProvider } from   '../../providers/servicos/servicos';
 import { ItemPedido } from '../../models/itemPedido';
+import { StatusPedidoPage } from '../status-pedido/status-pedido';
 
 /**
  * Generated class for the ConfirmarPedidoPage page.
@@ -30,7 +31,8 @@ export class ConfirmarPedidoPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private servicos: ServicosProvider) {
+    private servicos: ServicosProvider,
+    private toastCtrl: ToastController) {
 
     this.comidas = new Array<ItemPedido>();
     this.bebidas = new Array<ItemPedido>();
@@ -61,6 +63,12 @@ export class ConfirmarPedidoPage {
 
   enviarPedido() {
     this.servicos.alterarMesa(this.servicos.pedidoSeleciondado);
-    alert('Pedido enviado com sucesso!');
+    let toast = this.toastCtrl.create({duration: 3000, position: 'bottom'});
+    toast.setMessage('Pedido enviado com sucesso!');
+    this.navCtrl.push(StatusPedidoPage);
+  }
+
+  status(){
+    this.navCtrl.push(StatusPedidoPage);
   }
 }

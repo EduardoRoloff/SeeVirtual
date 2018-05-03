@@ -37,7 +37,7 @@ export class ComandaServiceProvider {
       .map(c => { //MAP PARA ACESSAR O OBJETO
         return { key: c.key, ...c.payload.val() };
       })
-  }
+  } 
 
   //SALVAR
   save(comanda: any) {
