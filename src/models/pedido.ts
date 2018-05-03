@@ -2,9 +2,6 @@ import { ItemPedido } from "./itemPedido";
 
 export class Pedido {
 
-    /**
-     *
-     */
     constructor(emailLogado: string) {
         this.itens = [];
         this.emailDoCliente = emailLogado;
