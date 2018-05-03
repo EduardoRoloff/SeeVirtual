@@ -8,7 +8,6 @@ import { Mesa } from '../../models/mesa';
 import { Empresa } from '../../models/empresa';
 import { PedidoEmAndaento } from '../../models/pedidoEmAndamento';
 import { v1 } from 'uuid';
-
 import { AutenticacaoServiceProvider } from '../autenticacao-service/autenticacao-service';
 
 
@@ -28,6 +27,7 @@ export class ServicosProvider {
   clientesList: AngularFireList<any>;
   empresasList: AngularFireList<any[]>;
   mesaSelecionada: Mesa;
+
   pedidoEmAndamento: Pedido;
   empresaSelecionda: Empresa;
 
@@ -37,7 +37,7 @@ export class ServicosProvider {
     this.pedidoEmAndamento = new Pedido(this.servicoLogin.obterUsuarioLogado().email);
     this.obterUduarioLogado();
 
-  }
+    }
 
   obterPedidoDoUsuario() {
 
@@ -50,7 +50,6 @@ export class ServicosProvider {
 
     this.pedidoEmAndamento = new Pedido(emailLogado);
   }
-
   salvarCliente(email: string) {
     this.clientesList.push({
       usuario: email
@@ -80,6 +79,7 @@ export class ServicosProvider {
       });
   }
 
+
   buscarEmpresaSelecionada(empresa: Empresa) {
     let list = Array<Empresa>();
     list = [];
@@ -93,7 +93,7 @@ export class ServicosProvider {
         list.push(item as Empresa)
         this.empresaSelecionda = list[0];
       });
-  }
+  } 
 
 
   getList() {

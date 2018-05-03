@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ComandaPage } from '../comanda/comanda';
+import { VisualizarComandaPage } from '../visualizar-comanda/visualizar-comanda';
 
 /**
  * Generated class for the StatusPedidoPage page.
@@ -15,11 +17,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class StatusPedidoPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StatusPedidoPage');
+    
   }
 
+  fazerNovoPedido(){
+    this.navCtrl.push(ComandaPage);
+  }
+
+  visualizarComanda(){
+    this.navCtrl.push(VisualizarComandaPage);
+  }
 }

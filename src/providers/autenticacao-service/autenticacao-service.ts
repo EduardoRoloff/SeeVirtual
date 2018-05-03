@@ -53,8 +53,6 @@ export class AutenticacaoServiceProvider {
   statusDoUsuario() {
     this.angularFireAuth.auth.onAuthStateChanged(usuario => {
       this.usuario.email = usuario.email;
-      console.log(usuario);
-      
     });
   }
 }

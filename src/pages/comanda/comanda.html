@@ -30,7 +30,7 @@
 
 </ion-header>
 
- 
+
 <ion-content padding class="cards-bg">
   <div [ngSwitch]="comanda">
     <ion-list *ngSwitchCase="'comidas'">
@@ -42,11 +42,13 @@
             <ion-checkbox color="bright" [(ngModel)]="itemPedido.escolhido" (click)="selecionarItem(itemPedido)"></ion-checkbox>
           </ion-card-title>
         </ion-card-content>
-        
-        <ion-row no-padding>
+        <ion-item>
+          <ion-textarea [(ngModel)]="itemPedido.observacao" placeholder="Adicione uma observação:" name="observacao"></ion-textarea>
+        </ion-item>
+        <ion-row no-padding> 
           <ion-col text-left>
             <button ion-button color="bright" outline icon-only (click)="adicionarMaisItem(itemPedido)">
-              <ion-icon name='add-circle' is-active="false" >{{itemPedido.quantidade}}</ion-icon>
+              <ion-icon name='add-circle' is-active="false">{{itemPedido.quantidade}}</ion-icon>
             </button>
           </ion-col>
           <ion-col text-right>
