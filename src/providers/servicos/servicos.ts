@@ -133,6 +133,7 @@ export class ServicosProvider {
     }
 
     this.pedidoEmAndamento.numeroDoPedido = v1();
+    this.pedidoEmAndamento.horaDoPedido = new Date();
     let path = 'empresas/' + this.empresaSelecionda.$key + '/pedidos/' + this.pedidoEmAndamento.numeroDoPedido;
     this.db.object(path).set({ ...this.pedidoEmAndamento });
 
@@ -142,11 +143,12 @@ export class ServicosProvider {
 
   private salvarPedidoNoCliente() {
     let pedidoDoCliente = new PedidosCliente();
-    pedidoDoCliente.empresa = this.empresaSelecionda.$key;
-    pedidoDoCliente.dataPedido = this.pedidoEmAndamento.horaDoPedido;
-    pedidoDoCliente.pedido = this.pedidoEmAndamento.numeroDoPedido;
+    
+    
     pedidoDoCliente.status = true;
     pedidoDoCliente.numero = this.pedidoEmAndamento.numeroDoPedido;
+    pedidoDoCliente.dataPedido = this.pedidoEmAndamento.horaDoPedido;
+
     if(!this.clienteLogado){
       this.clienteLogado = new Cliente(this.servicoLogin.obterUsuarioLogado().email);
       this.clienteLogado.$key = v1();
