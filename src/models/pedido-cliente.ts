@@ -1,7 +1,5 @@
 export class PedidosCliente {
-
-    
-    $key:string;
+    numero:string;
     dataPedido:Date;
     empresa:string;
     pedido:string;
