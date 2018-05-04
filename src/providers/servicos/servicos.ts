@@ -2,7 +2,6 @@ import { PedidoEmAndaento } from './../../models/pedidoEmAndamento';
 import { PedidosCliente } from './../../models/pedido-cliente';
 import { Cliente } from './../../models/cliente';
 import { Pedido } from './../../models/pedido';
-import { Usuario } from './../autenticacao-service/usuario';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Mesa } from '../../models/mesa';

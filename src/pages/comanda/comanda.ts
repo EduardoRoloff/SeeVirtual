@@ -4,16 +4,9 @@ import { Item } from '../../models/item';
 import { Empresa } from '../../models/empresa';
 import { ServicosProvider } from '../../providers/servicos/servicos';
 import { ItemPedido } from '../../models/itemPedido';
-import { Pedido } from '../../models/pedido';
 import { AutenticacaoServiceProvider } from '../../providers/autenticacao-service/autenticacao-service';
 import { ConfirmarPedidoPage } from '../confirmar-pedido/confirmar-pedido';
 
-/**
- * Generated class for the ComandaPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 const tipos = {
   COMIDA: 'comida',
