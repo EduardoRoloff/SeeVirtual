@@ -4,7 +4,6 @@ import { Item } from '../../models/item';
 import { Empresa } from '../../models/empresa';
 import { ServicosProvider } from '../../providers/servicos/servicos';
 import { ItemPedido } from '../../models/itemPedido';
-import { Pedido } from '../../models/pedido';
 import { AutenticacaoServiceProvider } from '../../providers/autenticacao-service/autenticacao-service';
 import { ConfirmarPedidoPage } from '../confirmar-pedido/confirmar-pedido';
 

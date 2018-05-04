@@ -38,9 +38,10 @@
         <img src="{{itemPedido.item.imagem}}" alt="">
         <ion-card-content>
           <ion-card-title>
-            {{itemPedido.item.descricao}}
+            {{itemPedido.item.nome}}
             <ion-checkbox color="bright" [(ngModel)]="itemPedido.escolhido" (click)="selecionarItem(itemPedido)"></ion-checkbox>
           </ion-card-title>
+          <p><b>Descrição:</b> {{itemPedido.item.descricao}}</p>
         </ion-card-content>
         <ion-item>
           <ion-textarea [(ngModel)]="itemPedido.observacao" placeholder="Adicione uma observação:" name="observacao"></ion-textarea>

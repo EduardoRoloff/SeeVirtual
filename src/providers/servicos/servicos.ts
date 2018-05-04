@@ -1,12 +1,10 @@
 import { PedidosCliente } from './../../models/pedido-cliente';
 import { Cliente } from './../../models/cliente';
 import { Pedido } from './../../models/pedido';
-import { Usuario } from './../autenticacao-service/usuario';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Mesa } from '../../models/mesa';
 import { Empresa } from '../../models/empresa';
-import { PedidoEmAndaento } from '../../models/pedidoEmAndamento';
 import { v1 } from 'uuid';
 import { AutenticacaoServiceProvider } from '../autenticacao-service/autenticacao-service';
 
