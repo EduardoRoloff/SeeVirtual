@@ -67,14 +67,18 @@
         <img src="{{itemPedido.item.imagem}}" alt="">
         <ion-card-content>
           <ion-card-title>
-            {{itemPedido.item.descricao}}
-            <ion-checkbox color="bright"></ion-checkbox>
+            {{itemPedido.item.nome}}
+            <ion-checkbox color="bright" [(ngModel)]="itemPedido.escolhido" (click)="selecionarItem(itemPedido)"></ion-checkbox>
           </ion-card-title>
+          <p><b>Descrição:</b>{{itemPedido.item.descricao}}</p>
         </ion-card-content>
+        <ion-item>
+          <ion-textarea[(ngModel)]="itemPedido.observacao" placeholder="Adicionar uma observação:" name="observacao"></ion-textarea>
+        </ion-item>
         <ion-row no-padding>
           <ion-col text-left>
-            <button ion-button color="bright" outline icon-only>
-              <ion-icon name='add-circle' is-active="false"> 0</ion-icon>
+            <button ion-button color="bright" outline icon-only (click)="adicionarMaisItem(itemPedido)">
+              <ion-icon name='add-circle' is-active="false">{{itemPedido.quantidade}}</ion-icon>
             </button>
           </ion-col>
           <ion-col text-right>
@@ -92,33 +96,18 @@
         <img src="{{itemPedido.item.imagem}}" alt="">
         <ion-card-content>
           <ion-card-title>
-            {{itemPedido.item.descricao}}
-            <ion-checkbox color="bright"></ion-checkbox>
+            {{itemPedido.item.nome}}
+            <ion-checkbox color="bright" [(ngModel)]="itemPedido.escolhido" (click)="selecionarItem(itemPedido)"></ion-checkbox>
           </ion-card-title>
+          <p><b>Descrição:</b> {{itemPedido.item.descricao}}</p>
         </ion-card-content>
-        <!-- <ion-row no-padding>
-              <ion-col>
-                <ion-item>
-                  <ion-label>Adicionais</ion-label>
-                  <ion-select [(ngModel)]="adicionais" multiple="true" cancelText="Cancelar" okText="Adicionar!">
-                    <ion-option value="bacon">Bacon</ion-option>
-                    <ion-option value="olives">Black Olives</ion-option>
-                    <ion-option value="xcheese">Extra Cheese</ion-option>
-                    <ion-option value="peppers">Green Peppers</ion-option>
-                    <ion-option value="mushrooms">Mushrooms</ion-option>
-                    <ion-option value="onions">Onions</ion-option>
-                    <ion-option value="pepperoni">Pepperoni</ion-option>
-                    <ion-option value="pineapple">Pineapple</ion-option>
-                    <ion-option value="sausage">Sausage</ion-option>
-                    <ion-option value="Spinach">Spinach</ion-option>
-                  </ion-select>
-                </ion-item>
-              </ion-col>
-            </ion-row> -->
+        <ion-item>
+          <ion-textarea[(ngModel)]="itemPedido.observacao" plcaeholder="Adicionar uma observação:" name="observacao"></ion-textarea>
+        </ion-item>
         <ion-row no-padding>
           <ion-col text-left>
-            <button ion-button color="bright" outline icon-only>
-              <ion-icon name='add-circle' is-active="false"> 0</ion-icon>
+            <button ion-button color="bright" outline icon-only (click)="adicionarMaisItem(itemPedido)">
+              <ion-icon name='add-circle' is-active="false">{{itemPedido.quantidade}}</ion-icon>
             </button>
           </ion-col>
           <ion-col text-right>

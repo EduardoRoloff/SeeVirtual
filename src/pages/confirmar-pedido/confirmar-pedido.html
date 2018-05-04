@@ -18,7 +18,7 @@
     <ion-item-divider color="light">Comida</ion-item-divider>
     <ion-item *ngFor="let itensPedidos of comidas">
     <ion-label>
-         {{itensPedidos.item.descricao}} 
+         {{itensPedidos.item.nome}} 
       </ion-label>
       <ion-label>
         Quatidade: {{itensPedidos.quantidade}} 
@@ -30,7 +30,7 @@
     <ion-item-divider color="light">Bedida</ion-item-divider>
     <ion-item>
       <ion-label>
-         {{itensPedidos.item.descricao}} 
+         {{itensPedidos.item.nome}} 
       </ion-label>
       <ion-label>
          {{itensPedidos.quantidade}} 
@@ -42,7 +42,7 @@
     <ion-item-divider color="light">Outros</ion-item-divider>
     <ion-item>
     <ion-label>
-         {{itensPedidos.item.descricao}} 
+         {{itensPedidos.item.nome}} 
       </ion-label>
       <ion-label>
          {{itensPedidos.quantidade}} 
