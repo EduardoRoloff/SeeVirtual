@@ -144,7 +144,6 @@ export class ServicosProvider {
   private salvarPedidoNoCliente() {
     let pedidoDoCliente = new PedidosCliente();
     
-    
     pedidoDoCliente.status = true;
     pedidoDoCliente.numero = this.pedidoEmAndamento.numeroDoPedido;
     pedidoDoCliente.dataPedido = this.pedidoEmAndamento.horaDoPedido;
