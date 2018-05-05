@@ -1,5 +1,3 @@
-import { StatusBar } from '@ionic-native/status-bar';
-
 import { Usuario } from './../autenticacao-service/usuario';
 import { Erros } from './erros';
 

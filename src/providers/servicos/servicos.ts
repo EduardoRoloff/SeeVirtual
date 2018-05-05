@@ -1,4 +1,4 @@
-import { PedidoEmAndaento } from './../../models/pedidoEmAndamento';
+import { EmpresaDoCliente } from './../../models/empresa-do-cliente';
 import { PedidosCliente } from './../../models/pedido-cliente';
 import { Cliente } from './../../models/cliente';
 import { Pedido } from './../../models/pedido';
@@ -14,10 +14,9 @@ import { AutenticacaoServiceProvider } from '../autenticacao-service/autenticaca
 export class ServicosProvider {
 
 
-
   clienteLogado: Cliente;
-  private PATHEMPRESAS = 'empresas';
-  private PATHCLIENTES = 'clientes';
+  private EMPRESAS = 'empresas';
+  private CLIENTES = 'clientes';
   clientesList: AngularFireList<any>;
   empresasList: AngularFireList<any[]>;
   mesaSelecionada: Mesa;
@@ -27,38 +26,45 @@ export class ServicosProvider {
 
   constructor(private db: AngularFireDatabase,
     private servicoLogin: AutenticacaoServiceProvider) {
-    this.obterListaDeClientes();
 
+    this.obterListaDeClientes();
   }
 
   obterPedidoDoUsuario(chaveDopedido: string) {
 
-    let emailLogado = this.clienteLogado.usuario;
+    let emailLogado = this.servicoLogin.obterUsuarioLogado().email;
     let ref = this.db.database.ref('empresas/' + this.empresaSelecionda.$key + '/pedidos');
     ref.orderByChild(chaveDopedido).on('child_added', snepshot => {
       let pedido = snepshot.val() as Pedido;
-      this.pedidoEmAndamento = pedido != null ? pedido : new Pedido(emailLogado);
+      this.pedidoEmAndamento = pedido;
+      return;
     });
 
-    this.pedidoEmAndamento = new Pedido(emailLogado);
+    if (!this.pedidoEmAndamento) {
+      this.pedidoEmAndamento = new Pedido(emailLogado);
+      if (this.mesaSelecionada.numero)
+        this.pedidoEmAndamento.mesa = this.mesaSelecionada.numero;
+    }
+
+  }
+
+  carregarPedido() {
+    this.obterUduarioLogado();
   }
 
   buscarEmpresaSelecionada(empresa: Empresa) {
     let list = Array<Empresa>();
     list = [];
 
-    let ref = this.db.database
-      .ref("empresas")
+    this.db.database
+      .ref(this.EMPRESAS)
       .orderByKey()
       .equalTo(empresa.$key).on("child_added", (snapshot) => {
         let item = snapshot.val();
         item.$key = snapshot.key;
         list.push(item as Empresa)
         this.empresaSelecionda = list[0];
-        this.obterUduarioLogado();
-        if (!this.pedidoEmAndamento) {
-          this.pedidoEmAndamento = new Pedido(this.servicoLogin.obterUsuarioLogado().email);
-        }
+        this.verificarPedidoEmAberto();
       });
   }
 
@@ -66,32 +72,36 @@ export class ServicosProvider {
     this.clientesList.push({
       usuario: email
     });
-
   }
 
   obterUduarioLogado() {
     let list = Array<Cliente>();
     list = [];
     let emailLogado = this.servicoLogin.obterUsuarioLogado().email;
-    let ref = this.db.database
-      .ref("clientes")
+    this.db.database
+      .ref(this.CLIENTES)
       .orderByChild('usuario')
       .equalTo(emailLogado).on("child_added", (snapshot) => {
         let item = snapshot.val();
         item.$key = snapshot.key;
         list.push(item as Cliente)
         this.clienteLogado = list[0];
-        this.verificarPedidoEmAberto();
+
       });
   }
 
   verificarPedidoEmAberto() {
-    if (!this.clienteLogado.empresa) {
+    if (!this.clienteLogado.empresas) {
       this.pedidoEmAndamento = new Pedido(this.clienteLogado.usuario);
       return;
     }
-    let empresa = this.clienteLogado.empresa
-      .find(e => e.chaveDaEmpresa === this.empresaSelecionda.$key);
+    let empresa: EmpresaDoCliente;
+    this.clienteLogado.empresas.forEach(emp => {
+      if (emp.chaveDaEmpresa == this.empresaSelecionda.$key) {
+        empresa = emp;
+        return;
+      }
+    })
 
     if (!empresa) {
       this.pedidoEmAndamento = new Pedido(this.clienteLogado.usuario);
@@ -99,27 +109,29 @@ export class ServicosProvider {
     }
     let pedido = empresa.pedido.find(c => c.status);
 
+    if (!pedido) {
+      this.pedidoEmAndamento = new Pedido(this.clienteLogado.usuario);
+      return
+    }
+
     this.obterPedidoDoUsuario(pedido.pedido);
 
   }
 
-
-
-
   getList() {
-    this.empresasList = this.db.list(this.PATHEMPRESAS);
+    this.empresasList = this.db.list(this.EMPRESAS);
     return this.empresasList;
   }
 
   obterListaDeClientes() {
-    this.clientesList = this.db.list(this.PATHCLIENTES);
-    return this.clientesList;
+    this.clientesList = this.db.list(this.CLIENTES);
+    if (this.servicoLogin.obterUsuarioLogado().email) {
+      this.obterUduarioLogado();
+    }
   }
-
 
   selecionarMesa(mesa: Mesa) {
     this.mesaSelecionada = mesa;
-
   }
 
   inserirPedido() {
@@ -131,9 +143,13 @@ export class ServicosProvider {
       this.pedidoEmAndamento.pedidoEmAberto = true;
     }
 
-    this.pedidoEmAndamento.numeroDoPedido = v1();
+    if (!this.pedidoEmAndamento.numeroDoPedido) {
+      this.pedidoEmAndamento.numeroDoPedido = v1();
+    }
+
     this.pedidoEmAndamento.horaDoPedido = new Date();
-    let path = 'empresas/' + this.empresaSelecionda.$key + '/pedidos/' + this.pedidoEmAndamento.numeroDoPedido;
+
+    let path = this.EMPRESAS + '/' + this.empresaSelecionda.$key + '/pedidos/' + this.pedidoEmAndamento.numeroDoPedido;
     this.db.object(path).set({ ...this.pedidoEmAndamento });
 
     this.salvarPedidoNoCliente();
@@ -142,16 +158,30 @@ export class ServicosProvider {
 
   private salvarPedidoNoCliente() {
     let pedidoDoCliente = new PedidosCliente();
-    
+
     pedidoDoCliente.status = true;
     pedidoDoCliente.numero = this.pedidoEmAndamento.numeroDoPedido;
-    pedidoDoCliente.dataPedido = this.pedidoEmAndamento.horaDoPedido;
+    pedidoDoCliente.dataPedido = this.pedidoEmAndamento.horaDoPedido.getDate();
 
-    if(!this.clienteLogado){
-      this.clienteLogado = new Cliente(this.servicoLogin.obterUsuarioLogado().email);
-      this.clienteLogado.$key = v1();
-    }
-    let path = 'cliente/' + this.clienteLogado.$key + '/empresas/' + this.empresaSelecionda.$key + '/pedidos/' + pedidoDoCliente.numero;
+    let empresa = new EmpresaDoCliente();
+    empresa.chaveDaEmpresa = this.empresaSelecionda.$key;
+
+    this.obterUduarioLogado();
+
+    // if(!this.clienteLogado.empresas){
+    //   this.clienteLogado.empresas = [];
+    // }
+    // this.clienteLogado.empresas.push(empresa)
+
+    //this.alterarCliente();
+
+    let path = this.CLIENTES + '/' + this.clienteLogado.$key + '/' + this.EMPRESAS + '/' + this.empresaSelecionda.$key + '/pedidos/' + pedidoDoCliente.numero;
     this.db.object(path).set({ ...pedidoDoCliente });
   }
+  alterarCliente(): any {
+    this.clientesList.update(this.clienteLogado.$key,{
+      empresas:this.clienteLogado.empresas
+    })
+  }
 }
+

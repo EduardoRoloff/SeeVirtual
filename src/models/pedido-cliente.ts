@@ -1,6 +1,6 @@
 export class PedidosCliente {
     numero:string;
-    dataPedido:Date;
+    dataPedido:number;
     empresa:string;
     pedido:string;
     status:boolean;

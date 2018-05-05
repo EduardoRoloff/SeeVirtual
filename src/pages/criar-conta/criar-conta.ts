@@ -38,6 +38,7 @@ export class CriarContaPage {
         .then((usuario: any) =>{
           usuario.sendEmailVerification();
           this.servicos.salvarCliente(this.usuario.email);
+          this.servicos.obterUduarioLogado();
           toats.setMessage('Usuário criado com sucesso');
           toats.present();//EXIBIR O TOATS
 

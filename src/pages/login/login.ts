@@ -1,11 +1,12 @@
+import { Usuario } from './../../providers/autenticacao-service/usuario';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { Usuario } from '../../providers/autenticacao-service/usuario';
 import { NgForm } from '@angular/forms';
 import { CriarContaPage } from '../criar-conta/criar-conta';
 import { AutenticacaoServiceProvider } from '../../providers/autenticacao-service/autenticacao-service';
 import { HomePage } from '../home/home';
 import { ResetarSenhaPage } from '../resetar-senha/resetar-senha';
+import { ServicosProvider } from '../../providers/servicos/servicos';
 
 /**
  * Generated class for the LoginPage page.
@@ -20,14 +21,17 @@ import { ResetarSenhaPage } from '../resetar-senha/resetar-senha';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  usuario: Usuario = new Usuario();
+  
   @ViewChild('form') form: NgForm;
+  usuario: Usuario;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
+    private servico: ServicosProvider,
     private autenticacaoService: AutenticacaoServiceProvider,
     private toastCtrl: ToastController) {
+      this.usuario = new Usuario();
   }
 
   criarConta(){
@@ -42,6 +46,11 @@ export class LoginPage {
     if (this.form.form.valid) {
       this.autenticacaoService.logar(this.usuario)
         .then(() => {
+          this.servico.obterUduarioLogado();
+          if(!this.servico.clienteLogado){
+            this.servico.salvarCliente(this.usuario.email)
+          }
+          
           this.navCtrl.setRoot(HomePage);
         })
         .catch((error: any) => {

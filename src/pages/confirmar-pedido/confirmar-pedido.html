@@ -26,26 +26,26 @@
     </ion-item>
   </ion-item-group>
 
-  <ion-item-group *ngFor="let itensPedidos of bedidas">
+  <ion-item-group>
     <ion-item-divider color="light">Bedida</ion-item-divider>
-    <ion-item>
+    <ion-item *ngFor="let itensPedidos of bebidas">
       <ion-label>
          {{itensPedidos.item.nome}} 
       </ion-label>
       <ion-label>
-         {{itensPedidos.quantidade}} 
+        Quatidade: {{itensPedidos.quantidade}} 
       </ion-label>
     </ion-item>
   </ion-item-group>
 
-  <ion-item-group *ngFor="let itensPedidos of outros">
+  <ion-item-group>
     <ion-item-divider color="light">Outros</ion-item-divider>
-    <ion-item>
+    <ion-item *ngFor="let itensPedidos of outros">
     <ion-label>
          {{itensPedidos.item.nome}} 
       </ion-label>
       <ion-label>
-         {{itensPedidos.quantidade}} 
+        Quatidade: {{itensPedidos.quantidade}} 
       </ion-label>
     </ion-item>
   </ion-item-group>

@@ -46,6 +46,7 @@ export class ComandaPage {
     this.bebidas = new Array<ItemPedido>();
     this.outros = new Array<ItemPedido>();
     this.itensDoPedidos = new Array<ItemPedido>();
+    
   }
 
   ngOnInit() {
@@ -97,6 +98,10 @@ export class ComandaPage {
 
   confirmarPedido() {
    
+   
+    this.servicos.carregarPedido();
+    
+
     let itens = [
       ...this.comidas,
       ...this.bebidas,
@@ -104,7 +109,11 @@ export class ComandaPage {
     ].filter(i => i.escolhido);
    
 
-    this.servicos.pedidoEmAndamento.itens.push(itens.pop());
+    itens.forEach(element => {
+
+      this.servicos.pedidoEmAndamento.itens.push(element);
+    });
+    
 
     if(this.servicos.pedidoEmAndamento.itens.length == 0){
         alert('Não foi selecionado nenhum item!')
