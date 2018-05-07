@@ -28,7 +28,6 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private servico: ServicosProvider,
     private autenticacaoService: AutenticacaoServiceProvider,
     private toastCtrl: ToastController) {
       this.usuario = new Usuario();
@@ -46,11 +45,6 @@ export class LoginPage {
     if (this.form.form.valid) {
       this.autenticacaoService.logar(this.usuario)
         .then(() => {
-          this.servico.obterUduarioLogado();
-          if(!this.servico.clienteLogado){
-            this.servico.salvarCliente(this.usuario.email)
-          }
-          
           this.navCtrl.setRoot(HomePage);
         })
         .catch((error: any) => {

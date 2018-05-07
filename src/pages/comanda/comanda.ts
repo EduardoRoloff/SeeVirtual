@@ -98,19 +98,13 @@ export class ComandaPage {
 
   confirmarPedido() {
    
-   
-    this.servicos.carregarPedido();
-    
-
     let itens = [
       ...this.comidas,
       ...this.bebidas,
       ...this.outros
     ].filter(i => i.escolhido);
    
-
     itens.forEach(element => {
-
       this.servicos.pedidoEmAndamento.itens.push(element);
     });
     
@@ -120,7 +114,7 @@ export class ComandaPage {
         return;
     }
 
-     this.servicos.pedidoEmAndamento.emailDoCliente = this.autenticacaoService.obterUsuarioLogado().email;
+     this.servicos.pedidoEmAndamento.emailDoCliente = this.autenticacaoService.clienteLogado.usuario;
      this.servicos.pedidoEmAndamento.horaDoPedido = new Date();
      this.servicos.pedidoEmAndamento.mesa = this.servicos.mesaSelecionada.numero;
      this.servicos.pedidoEmAndamento.pedidoEmAberto = true;

@@ -1,10 +1,10 @@
 import { PedidosCliente } from './pedido-cliente';
 export class EmpresaDoCliente {
     chaveDaEmpresa:string;
-    pedido:PedidosCliente[];
+    pedidos:PedidosCliente[];
 
 
     constructor() {
-        this.pedido = [];
+        this.pedidos = [];
     }
 }
