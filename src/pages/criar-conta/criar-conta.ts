@@ -27,7 +27,7 @@ export class CriarContaPage {
     public navParams: NavParams,
     private toastCtrl: ToastController,
     private autenticacaoService: AutenticacaoServiceProvider,
-    private servicos: ServicosProvider,) {
+    private servicos: ServicosProvider) {
   }
 
   criarConta(){
@@ -37,7 +37,6 @@ export class CriarContaPage {
       this.autenticacaoService.criarUsuario(this.usuario)
         .then((usuario: any) =>{
           usuario.sendEmailVerification();
-          this.servicos.salvarCliente(this.usuario.email);
           toats.setMessage('Usuário criado com sucesso');
           toats.present();//EXIBIR O TOATS
 

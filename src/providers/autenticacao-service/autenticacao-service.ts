@@ -44,6 +44,7 @@ export class AutenticacaoServiceProvider {
     return new Promise((resolve, reject) => {
       this.angularFireAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
         .then((usuario) => {
+          this.salvarCliente(usuario.email)
           resolve(usuario);
         })
     })
@@ -68,9 +69,9 @@ export class AutenticacaoServiceProvider {
 
   statusDoUsuario() {
     this.angularFireAuth.auth.onAuthStateChanged(usuario => {
-      this.usuario.email = usuario.email;
-      console.log(usuario);
       if (usuario) {
+        console.log(usuario);
+        this.usuario.email = usuario.email;
         this.obterUsuarioLogado(usuario.email);
       }
     });

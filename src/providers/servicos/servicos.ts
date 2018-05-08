@@ -23,15 +23,12 @@ export class ServicosProvider {
   constructor(private db: AngularFireDatabase,
     private servicoLogin: AutenticacaoServiceProvider) {
 
-   // this.obterListaDeClientes();
     this.getList()
-    //this.obterUduarioLogado();
     
   }
 
   obterPedidoDoUsuario(chaveDopedido: string) {
 
-   // let emailLogado = this.servicoLogin.obterUsuarioLogado().email;
     let ref = this.db.database.ref('empresas/' + this.empresaSelecionda.$key + '/pedidos');
     ref.orderByChild(chaveDopedido).on('child_added', snepshot => {
       let pedido = snepshot.val() as Pedido;
@@ -46,10 +43,6 @@ export class ServicosProvider {
     }
 
   }
-
-  // carregarPedido() {
-  //   this.obterUduarioLogado();
-  // }
 
   buscarEmpresaSelecionada(empresa: Empresa) {
     let list = Array<Empresa>();
@@ -72,22 +65,6 @@ export class ServicosProvider {
       usuario: email
     });
   }
-
-  // obterUduarioLogado() {
-  //   let list = Array<Cliente>();
-  //   list = [];
-  //   let emailLogado = this.servicoLogin.obterUsuarioLogado().email;
-  //   this.db.database
-  //     .ref(this.CLIENTES)
-  //     .orderByChild('usuario')
-  //     .equalTo(emailLogado).on("child_added", (snapshot) => {
-  //       let item = snapshot.val();
-  //       item.$key = snapshot.key;
-  //       list.push(item as Cliente)
-  //       this.clienteLogado = list[0];
-
-  //     });
-  // }
 
   verificarPedidoEmAberto() {
 
@@ -160,5 +137,7 @@ export class ServicosProvider {
     let path = this.CLIENTES + '/' + this.servicoLogin.clienteLogado.$key + '/' + '/pedidos/' + pedidoDoCliente.numero;
     this.db.object(path).set({ ...pedidoDoCliente });
   }
+
+
   
 }
