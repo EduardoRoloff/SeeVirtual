@@ -21,14 +21,14 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item>
+    <ion-item *ngFor="let itensPedido of comidas"> 
       <ion-thumbnail item-start>
-        <img src="{{itemPedido.item.imagem}}">
+        <img src="{{itensPedido.item.imagem}}">
       </ion-thumbnail>
-      <h2>{{itemPedido.item.nome}}</h2>
+      <h2>{{itensPedido.item.nome}}</h2>
       <!-- <p>Hayao Miyazaki • 1988</p>
       <button ion-button clear item-end>View</button> -->
-      <p>Qtd: {{itemPedido.item.quantidade}}</p>
+      <p>Qtd: {{itensPedido.quantidade}}</p>
     </ion-item>
   </ion-list>
 </ion-content>
