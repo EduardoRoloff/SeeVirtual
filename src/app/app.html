@@ -7,9 +7,14 @@
 
     <ion-content #content>
         <ion-list>
-            <button menuClose ion-item *ngFor="let pag of paginas" (click)="abrirPaginas(pag)">
-                {{pag.titulo}}
+            <button menuClose ion-item *ngFor="let pag of paginas" (click)="abrirHome()">
+                Home
             </button>
+            <div *ngIf="servicos.empresaFoiSelecionada">
+                <button menuClose ion-item *ngFor="let pag of paginas" (click)="abrirPaginas(pag)">
+                    {{pag.titulo}}
+                </button>
+            </div>
             <button menuClose ion-button block color="danger" (click)="logout()">
                 Sair
             </button>

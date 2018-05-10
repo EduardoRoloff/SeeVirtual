@@ -6,7 +6,6 @@ import { CriarContaPage } from '../criar-conta/criar-conta';
 import { AutenticacaoServiceProvider } from '../../providers/autenticacao-service/autenticacao-service';
 import { HomePage } from '../home/home';
 import { ResetarSenhaPage } from '../resetar-senha/resetar-senha';
-import { ServicosProvider } from '../../providers/servicos/servicos';
 
 /**
  * Generated class for the LoginPage page.

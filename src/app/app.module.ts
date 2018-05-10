@@ -29,7 +29,6 @@ import { environment } from '../environments/environment';
 import { ConfirmarPedidoPageModule } from '../pages/confirmar-pedido/confirmar-pedido.module';
 import { StatusPedidoPageModule } from '../pages/status-pedido/status-pedido.module';
 import { StatusPedidoPage } from '../pages/status-pedido/status-pedido';
-import { VisualizarComandaPage } from '../pages/visualizar-comanda/visualizar-comanda';
 import { VisualizarComandaPageModule } from '../pages/visualizar-comanda/visualizar-comanda.module';
 
 @NgModule({

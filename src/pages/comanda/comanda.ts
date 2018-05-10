@@ -30,7 +30,7 @@ export class ComandaPage {
   isAndroid: boolean = false;
   qtdItens = 0;
   selecionado = false;
-  algumItemSelecionado:boolean;
+  algumItemSelecionado: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -46,7 +46,7 @@ export class ComandaPage {
     this.bebidas = new Array<ItemPedido>();
     this.outros = new Array<ItemPedido>();
     this.itensDoPedidos = new Array<ItemPedido>();
-    
+
   }
 
   ngOnInit() {
@@ -64,7 +64,7 @@ export class ComandaPage {
             this.comidas.push(itemPedido);
             break;
           case tipos.BEBIDA:
-            this.bebidas.push(itemPedido); 
+            this.bebidas.push(itemPedido);
             break;
           case tipos.OUTROS:
           default:
@@ -97,27 +97,39 @@ export class ComandaPage {
   }
 
   confirmarPedido() {
-   
+
     let itens = [
       ...this.comidas,
       ...this.bebidas,
       ...this.outros
     ].filter(i => i.escolhido);
-   
-    itens.forEach(element => {
-      this.servicos.pedidoEmAndamento.itens.push(element);
-    });
-    
 
-    if(this.servicos.pedidoEmAndamento.itens.length == 0){
-        alert('Não foi selecionado nenhum item!')
-        return;
+    itens.forEach(element => {
+      let itemJaExistente = false;
+      if (this.servicos.pedidoEmAndamento.itens) {
+        for (let i = 0; i < this.servicos.pedidoEmAndamento.itens.length; i++) {
+          if (element.item.codigo == this.servicos.pedidoEmAndamento.itens[i].item.codigo) {
+            this.servicos.pedidoEmAndamento.itens[i].quantidade
+              = this.servicos.pedidoEmAndamento.itens[i].quantidade + element.quantidade;
+            itemJaExistente = true;
+          }
+        }
+      }
+
+      if (!itemJaExistente)
+        this.servicos.pedidoEmAndamento.itens.push(element);
+    });
+
+
+    if (this.servicos.pedidoEmAndamento.itens.length == 0) {
+      alert('Não foi selecionado nenhum item!')
+      return;
     }
 
-     this.servicos.pedidoEmAndamento.emailDoCliente = this.autenticacaoService.clienteLogado.usuario;
-     this.servicos.pedidoEmAndamento.horaDoPedido = new Date();
-     this.servicos.pedidoEmAndamento.mesa = this.servicos.mesaSelecionada.numero;
-     this.servicos.pedidoEmAndamento.pedidoEmAberto = true;
+    this.servicos.pedidoEmAndamento.emailDoCliente = this.autenticacaoService.clienteLogado.usuario;
+    this.servicos.pedidoEmAndamento.horaDoPedido = new Date();
+    this.servicos.pedidoEmAndamento.mesa = this.servicos.mesaSelecionada.numero;
+    this.servicos.pedidoEmAndamento.pedidoEmAberto = true;
 
     this.navCtrl.push(ConfirmarPedidoPage);
     // this.servicos.alterarMesa(this.servicos.mesaSelecionada);

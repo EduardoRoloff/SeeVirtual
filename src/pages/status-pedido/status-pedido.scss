@@ -17,7 +17,11 @@ page-status-pedido {
     margin-top: 50%;
   }
 
-  .spinner-ios-dots circle {
+  .spinner-em-aberto circle {
     fill: #e13838;
+  }
+
+  .spinner-fechado circle{
+    fill: darkgreen;
   }
 }

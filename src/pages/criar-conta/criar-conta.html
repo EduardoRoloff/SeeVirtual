@@ -17,7 +17,7 @@
 
       <ion-item>
         <ion-label floating style="color:white;">E-mail</ion-label>
-        <ion-input type="text" name="email" [(ngModel)]="usuario.email" #email="ngModel" required></ion-input>
+        <ion-input type="email" name="email" [(ngModel)]="usuario.email" #email="ngModel" required></ion-input>
       </ion-item>
       <!-- <ion-item *ngIf="email.errors && (email.dirty || email.touched)" class="text-danger">
         O campo é obrigatório

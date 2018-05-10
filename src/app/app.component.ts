@@ -7,6 +7,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { AutenticacaoServiceProvider } from '../providers/autenticacao-service/autenticacao-service';
+import { StatusPedidoPage } from '../pages/status-pedido/status-pedido';
+import { ServicosProvider } from '../providers/servicos/servicos';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +20,10 @@ export class MyApp {
   
   paginas: Array<{titulo: string, component: any}>;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth, private autenticacaoService: AutenticacaoServiceProvider) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, 
+    afAuth: AngularFireAuth, 
+    private autenticacaoService: AutenticacaoServiceProvider,
+    private servicos: ServicosProvider) {
     
     const authObserver = afAuth.authState.subscribe(usuario => {
       if (usuario) {
@@ -31,8 +36,8 @@ export class MyApp {
     })
 
     this.paginas = [
-      { titulo: 'Home', component: HomePage },
-      { titulo: 'Minha Conta', component: HomePage }
+      // { titulo: 'Home', component: HomePage },
+      { titulo: 'Status do Pedido', component: StatusPedidoPage },
     ];
     
     platform.ready().then(() => {
@@ -54,8 +59,10 @@ export class MyApp {
   }
 
   abrirPaginas(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  abrirHome(){
+    this.nav.setRoot(HomePage);
   }
 }

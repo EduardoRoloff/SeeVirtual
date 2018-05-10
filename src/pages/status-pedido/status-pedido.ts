@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ComandaPage } from '../comanda/comanda';
 import { VisualizarComandaPage } from '../visualizar-comanda/visualizar-comanda';
+import { ServicosProvider } from '../../providers/servicos/servicos';
 
 /**
  * Generated class for the StatusPedidoPage page.
@@ -17,14 +18,16 @@ import { VisualizarComandaPage } from '../visualizar-comanda/visualizar-comanda'
 })
 export class StatusPedidoPage {
 
+  pedidoEmAberto: boolean;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public servicos: ServicosProvider) {
   }
 
   ionViewDidLoad() {
-    
   }
 
   fazerNovoPedido(){

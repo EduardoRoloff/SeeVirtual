@@ -20,17 +20,24 @@ export class ServicosProvider {
   pedidoEmAndamento: Pedido;
   empresaSelecionda: Empresa;
 
+  empresaFoiSelecionada: boolean;
+
   constructor(private db: AngularFireDatabase,
     private servicoLogin: AutenticacaoServiceProvider) {
 
     this.getList()
-    
+
+  }
+
+  recarregarPedido() {
+    if (this.empresaFoiSelecionada)
+      this.buscarEmpresaSelecionada(this.empresaSelecionda)
   }
 
   obterPedidoDoUsuario(chaveDopedido: string) {
 
     let ref = this.db.database.ref('empresas/' + this.empresaSelecionda.$key + '/pedidos');
-    ref.orderByChild(chaveDopedido).on('child_added', snepshot => {
+    ref.orderByKey().equalTo(chaveDopedido).on('child_added', snepshot => {
       let pedido = snepshot.val() as Pedido;
       this.pedidoEmAndamento = pedido;
       return;
@@ -57,6 +64,7 @@ export class ServicosProvider {
         list.push(item as Empresa)
         this.empresaSelecionda = list[0];
         this.verificarPedidoEmAberto();
+        this.empresaFoiSelecionada = true;
       });
   }
 
@@ -68,7 +76,7 @@ export class ServicosProvider {
 
   verificarPedidoEmAberto() {
 
-    if(!this.servicoLogin.clienteLogado.pedidos){
+    if (!this.servicoLogin.clienteLogado.pedidos) {
       this.pedidoEmAndamento = new Pedido(this.servicoLogin.clienteLogado.usuario);
       return;
     }
@@ -96,7 +104,7 @@ export class ServicosProvider {
 
   obterListaDeClientes() {
     this.clientesList = this.db.list(this.CLIENTES);
-   
+
   }
 
   selecionarMesa(mesa: Mesa) {
@@ -133,11 +141,11 @@ export class ServicosProvider {
     pedidoDoCliente.dataPedido = this.pedidoEmAndamento.horaDoPedido;
     pedidoDoCliente.empresa = this.empresaSelecionda.$key;
 
-   
+
     let path = this.CLIENTES + '/' + this.servicoLogin.clienteLogado.$key + '/' + '/pedidos/' + pedidoDoCliente.numero;
     this.db.object(path).set({ ...pedidoDoCliente });
   }
 
 
-  
+
 }

@@ -7,6 +7,9 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Sua Comanda</ion-title>
   </ion-navbar>
 
@@ -21,13 +24,33 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let itensPedido of comidas"> 
+    <ion-item *ngFor="let itensPedido of comidas">
       <ion-thumbnail item-start>
         <img src="{{itensPedido.item.imagem}}">
       </ion-thumbnail>
       <h2>{{itensPedido.item.nome}}</h2>
       <!-- <p>Hayao Miyazaki • 1988</p>
       <button ion-button clear item-end>View</button> -->
+      <p>Qtd: {{itensPedido.quantidade}}</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-item *ngFor="let itensPedido of bebidas">
+      <ion-thumbnail item-start>
+        <img src="{{itensPedido.item.imagem}}">
+      </ion-thumbnail>
+      <h2>{{itensPedido.item.nome}}</h2>
+      <p>Qtd: {{itensPedido.quantidade}}</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-item *ngFor="let itensPedido of outros">
+      <ion-thumbnail item-start>
+        <img src="{{itensPedido.item.imagem}}">
+      </ion-thumbnail>
+      <h2>{{itensPedido.item.nome}}</h2>
       <p>Qtd: {{itensPedido.quantidade}}</p>
     </ion-item>
   </ion-list>

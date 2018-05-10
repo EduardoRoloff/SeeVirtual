@@ -21,6 +21,7 @@ export class HomePage {
   ngOnInit(){
     var empresa = this.servicos.getList();
     empresa.snapshotChanges().subscribe(item => {
+      this.servicos.recarregarPedido();
       this.empresasList = [];
       item.forEach(element => {
         var empresaListada = element.payload.toJSON();
