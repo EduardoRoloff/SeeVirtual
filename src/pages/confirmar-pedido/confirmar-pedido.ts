@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ServicosProvider } from   '../../providers/servicos/servicos';
 import { ItemPedido } from '../../models/itemPedido';
 import { StatusPedidoPage } from '../status-pedido/status-pedido';
@@ -31,6 +31,7 @@ export class ConfirmarPedidoPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    public alertCtrl: AlertController,
     private servicos: ServicosProvider) {
 
     this.comidas = new Array<ItemPedido>();
@@ -62,7 +63,12 @@ export class ConfirmarPedidoPage {
 
   enviarPedido() {
     this.servicos.inserirPedido();
-    alert('Pedido enviado com sucesso!');
+    let alerta = this.alertCtrl.create({
+      title: 'Pedido enviado com sucesso!',
+      subTitle: 'Aguarde!',
+      buttons: ['OK']
+    });
+    alerta.present();
     this.navCtrl.push(StatusPedidoPage);
   }
 

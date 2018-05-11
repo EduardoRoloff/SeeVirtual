@@ -30,6 +30,7 @@ import { ConfirmarPedidoPageModule } from '../pages/confirmar-pedido/confirmar-p
 import { StatusPedidoPageModule } from '../pages/status-pedido/status-pedido.module';
 import { StatusPedidoPage } from '../pages/status-pedido/status-pedido';
 import { VisualizarComandaPageModule } from '../pages/visualizar-comanda/visualizar-comanda.module';
+import { FecharContaPageModule } from '../pages/fechar-conta/fechar-conta.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { VisualizarComandaPageModule } from '../pages/visualizar-comanda/visuali
     ConfirmarPedidoPageModule,
     StatusPedidoPageModule,
     VisualizarComandaPageModule,
+    FecharContaPageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule

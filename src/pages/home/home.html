@@ -9,10 +9,14 @@
 
 <ion-content padding>
   <ion-searchbar (ionInput)="getEmpresas($event)" placeholder="Onde você está?"></ion-searchbar>
+  
   <ion-list *ngFor="let empresa of empresasList">
-    <button ion-item (click)="abrirComanda(empresa)" icon-start>
-      <ion-icon [name]="'logo-' + empresa.logo" [ngStyle]="{'color': empresa.color}" item-start></ion-icon>
-      {{empresa.razaoSocial}}
-    </button>
-  </ion-list>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="{{empresa.logo}}">
+        </ion-thumbnail>
+        <h2>{{empresa.razaoSocial}}</h2>
+        <button ion-button clear item-end (click)="abrirComanda(empresa)">Selecionar</button>
+      </ion-item>
+    </ion-list>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { Item } from '../../models/item';
 import { Empresa } from '../../models/empresa';
 import { ServicosProvider } from '../../providers/servicos/servicos';
@@ -36,6 +36,7 @@ export class ComandaPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
+    public alertCtrl: AlertController,
     private servicos: ServicosProvider,
     private autenticacaoService: AutenticacaoServiceProvider) {
 
@@ -122,7 +123,12 @@ export class ComandaPage {
 
 
     if (this.servicos.pedidoEmAndamento.itens.length == 0) {
-      alert('Não foi selecionado nenhum item!')
+      let alerta = this.alertCtrl.create({
+        title: 'Não foi selecionado nenhum item!',
+        subTitle: 'Para continuar selecione alguns itens!',
+        buttons: ['OK']
+      });
+      alerta.present();
       return;
     }
 

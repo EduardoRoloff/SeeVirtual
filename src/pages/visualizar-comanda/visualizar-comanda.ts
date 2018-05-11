@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServicosProvider } from '../../providers/servicos/servicos';
 import { ItemPedido } from '../../models/itemPedido';
+import { FecharContaPage } from '../fechar-conta/fechar-conta';
 
 /**
  * Generated class for the VisualizarComandaPage page.
@@ -59,6 +60,10 @@ export class VisualizarComandaPage {
           this.outros.push(element);
       }
     });
+  }
+
+  fecharConta(){
+    this.navCtrl.push(FecharContaPage);
   }
 
 }
