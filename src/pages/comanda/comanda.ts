@@ -110,9 +110,11 @@ export class ComandaPage {
       if (this.servicos.pedidoEmAndamento.itens) {
         for (let i = 0; i < this.servicos.pedidoEmAndamento.itens.length; i++) {
           if (element.item.codigo == this.servicos.pedidoEmAndamento.itens[i].item.codigo) {
-            this.servicos.pedidoEmAndamento.itens[i].quantidade
-              = this.servicos.pedidoEmAndamento.itens[i].quantidade + element.quantidade;
-            itemJaExistente = true;
+            if (!this.servicos.pedidoEmAndamento.itens[i].antendido) {
+              this.servicos.pedidoEmAndamento.itens[i].quantidade
+                = this.servicos.pedidoEmAndamento.itens[i].quantidade + element.quantidade;
+              itemJaExistente = true;
+            }
           }
         }
       }
@@ -134,7 +136,7 @@ export class ComandaPage {
 
     this.servicos.pedidoEmAndamento.emailDoCliente = this.autenticacaoService.clienteLogado.usuario;
     this.servicos.pedidoEmAndamento.horaDoPedido = new Date();
-    this.servicos.pedidoEmAndamento.mesa = this.servicos.mesaSelecionada.numero;
+    this.servicos.pedidoEmAndamento.mesa = this.servicos.pedidoEmAndamento.mesa;
     this.servicos.pedidoEmAndamento.pedidoEmAberto = true;
 
     this.navCtrl.push(ConfirmarPedidoPage);
