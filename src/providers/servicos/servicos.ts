@@ -6,6 +6,7 @@ import { Mesa } from '../../models/mesa';
 import { Empresa } from '../../models/empresa';
 import { v1 } from 'uuid';
 import { AutenticacaoServiceProvider } from '../autenticacao-service/autenticacao-service';
+import { ItemPedido } from '../../models/itemPedido';
 
 
 @Injectable()
@@ -19,6 +20,7 @@ export class ServicosProvider {
 
   pedidoEmAndamento: Pedido;
   empresaSelecionda: Empresa;
+  listaDaComanda: ItemPedido[];
 
   empresaFoiSelecionada: boolean;
 
@@ -40,6 +42,7 @@ export class ServicosProvider {
     ref.orderByKey().equalTo(chaveDopedido).on('child_added', snepshot => {
       let pedido = snepshot.val() as Pedido;
       this.pedidoEmAndamento = pedido;
+      this.preecherListaDaComanda();
       return;
     });
 
@@ -49,6 +52,26 @@ export class ServicosProvider {
         this.pedidoEmAndamento.mesa = this.mesaSelecionada.numero;
     }
 
+  }
+
+  preecherListaDaComanda() {
+    let listaAtendidos = this.pedidoEmAndamento.itens.filter(c => c.antendido);
+    this.agruparListaDoPedido(listaAtendidos);
+  }
+
+  agruparListaDoPedido(listaPedidos: ItemPedido[]) {
+    let itens = {};
+
+    listaPedidos.forEach(c => {
+      let descricao = c.item.descricao;
+      if (!itens[descricao]) {
+        itens[descricao] = [];
+      }
+      itens[descricao].push(c.item);
+      if (c.antendido) {
+        this.listaDaComanda = listaPedidos;
+      }
+    })
   }
 
   buscarEmpresaSelecionada(empresa: Empresa) {
@@ -146,6 +169,12 @@ export class ServicosProvider {
     this.db.object(path).set({ ...pedidoDoCliente });
   }
 
-
+  fecharConta() {
+    if (this.pedidoEmAndamento.pedidoEmAberto) {
+      throw new Error("Ainda existem pedidos em aberto!");
+    }
+    let path = this.EMPRESAS + '/' + this.empresaSelecionda.$key + '/pedidos/' + this.pedidoEmAndamento.numeroDoPedido + '/';
+    this.db.object(path).set({ ...this.pedidoEmAndamento.solicitacaoDeFechamento });
+  }
 
 }

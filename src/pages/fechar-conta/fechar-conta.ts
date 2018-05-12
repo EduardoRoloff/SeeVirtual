@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ServicosProvider } from '../../providers/servicos/servicos';
+import { SolicitacaoDeFechamento } from '../../models/solicitacao-de-fechamento';
 
 /**
  * Generated class for the FecharContaPage page.
@@ -23,6 +24,8 @@ export class FecharContaPage {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     private servicos: ServicosProvider) {
+
+      this.validarEstancia();
   }
 
   ionViewDidLoad() {
@@ -38,40 +41,39 @@ export class FecharContaPage {
     }
   }
 
+  private validarEstancia() {
+    if (!this.servicos.pedidoEmAndamento.solicitacaoDeFechamento) {
+      this.servicos.pedidoEmAndamento.solicitacaoDeFechamento = new SolicitacaoDeFechamento();
+    }
+  }
+  
+
   confirmarPagamentoCredito() {
-    let confirm = this.alertCtrl.create({
-      title: 'Valor: R$ 45,80',
-      message: 'Deseja pagar esse valor no crédito?',
-      buttons: [
-        {text: 'Cancelar'},
-        {text: 'Confimar'}
-      ]
-    });
-    confirm.present();
+    try {
+      this.servicos.pedidoEmAndamento.solicitacaoDeFechamento.formaDePagamento = "credito";
+      this.servicos.fecharConta();
+    } catch (error) {
+      alert(error);
+    }
+
   }
 
   confirmarPagamentoDebito() {
-    let confirm = this.alertCtrl.create({
-      title: 'Valor: R$ 45,80',
-      message: 'Deseja pagar esse valor no débito?',
-      buttons: [
-        {text: 'Cancelar'},
-        {text: 'Confimar'}
-      ]
-    });
-    confirm.present();
+    try {
+      this.servicos.pedidoEmAndamento.solicitacaoDeFechamento.formaDePagamento = "debito";
+      this.servicos.fecharConta();
+    } catch (error) {
+      alert(error);
+    }
   }
 
   confirmarPagamentoAVista() {
-    let confirm = this.alertCtrl.create({
-      title: 'Valor: R$ 45,80',
-      message: 'Deseja pagar esse valor a vista?',
-      buttons: [
-        {text: 'Cancelar'},
-        {text: 'Confimar'}
-      ]
-    });
-    confirm.present();
+    try {
+      this.servicos.pedidoEmAndamento.solicitacaoDeFechamento.formaDePagamento = "avista";
+      this.servicos.fecharConta();
+    } catch (error) {
+      alert(error);
+    }
   }
 
 }

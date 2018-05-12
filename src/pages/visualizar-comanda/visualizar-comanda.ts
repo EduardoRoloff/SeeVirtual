@@ -45,7 +45,7 @@ export class VisualizarComandaPage {
   }
 
   listarPedidos() {
-    this.pedidos = this.servicos.pedidoEmAndamento.itens;
+    this.pedidos = this.servicos.listaDaComanda;
 
     this.pedidos.forEach(element => {
       switch (element.item.tipo.toLowerCase()) {
