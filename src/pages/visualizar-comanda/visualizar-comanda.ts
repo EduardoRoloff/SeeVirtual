@@ -45,24 +45,26 @@ export class VisualizarComandaPage {
   }
 
   listarPedidos() {
-    this.pedidos = this.servicos.listaDaComanda;
+    this.pedidos = Object.values(this.servicos.itens);
+    for (let i = 0; i < this.pedidos.length; i++) {
+      this.pedidos[i].forEach(element => {
+        switch (element.item.tipo.toLowerCase()) {
+          case tipos.COMIDA:
+            this.comidas.push(element);
+            break;
+          case tipos.BEBIDA:
+            this.bebidas.push(element);
+            break;
+          case tipos.OUTROS:
+          default:
+            this.outros.push(element);
+        }
+      });
+    }
 
-    this.pedidos.forEach(element => {
-      switch (element.item.tipo.toLowerCase()) {
-        case tipos.COMIDA:
-          this.comidas.push(element);
-          break;
-        case tipos.BEBIDA:
-          this.bebidas.push(element);
-          break;
-        case tipos.OUTROS:
-        default:
-          this.outros.push(element);
-      }
-    });
   }
 
-  fecharConta(){
+  fecharConta() {
     this.navCtrl.push(FecharContaPage);
   }
 

@@ -12,8 +12,6 @@ import { Adicionais } from '../../models/adicionais';
 @Injectable()
 export class ServicosProvider {
 
-
-
   private EMPRESAS = 'empresas';
   private CLIENTES = 'clientes';
   clientesList: AngularFireList<any>;
@@ -25,6 +23,7 @@ export class ServicosProvider {
   listaDaComanda: ItemPedido[];
 
   empresaFoiSelecionada: boolean;
+  itens = {};
 
   constructor(private db: AngularFireDatabase,
     private servicoLogin: AutenticacaoServiceProvider) {
@@ -52,19 +51,18 @@ export class ServicosProvider {
 
   preecherListaDaComanda() {
     let listaAtendidos = this.pedidoEmAndamento.itens.filter(c => c.antendido);
-    //this.agruparListaDoPedido(listaAtendidos);
+    this.agruparListaDoPedido(listaAtendidos);
     this.listaDaComanda = listaAtendidos;
   }
 
   agruparListaDoPedido(listaPedidos: ItemPedido[]) {
-    let itens = {};
 
     listaPedidos.forEach(c => {
-      let descricao = c.item.descricao;
-      if (!itens[descricao]) {
-        itens[descricao] = [];
+      let nome = c.item.nome;
+      if (!this.itens[nome]) {
+        this.itens[nome] = [];
       }
-      itens[descricao].push(c.item);
+      this.itens[nome].push(c);
       if (c.antendido) {
         this.listaDaComanda = listaPedidos;
       }
