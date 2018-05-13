@@ -17,6 +17,7 @@ import { SolicitacaoDeFechamento } from '../../models/solicitacao-de-fechamento'
 })
 export class FecharContaPage {
 
+
   pedidos: any;
 
   constructor(
@@ -25,7 +26,7 @@ export class FecharContaPage {
     public alertCtrl: AlertController,
     private servicos: ServicosProvider) {
 
-      this.validarEstancia();
+    this.validarEstancia();
   }
 
   ionViewDidLoad() {
@@ -46,12 +47,13 @@ export class FecharContaPage {
       this.servicos.pedidoEmAndamento.solicitacaoDeFechamento = new SolicitacaoDeFechamento();
     }
   }
-  
+
 
   confirmarPagamentoCredito() {
     try {
       this.servicos.pedidoEmAndamento.solicitacaoDeFechamento.formaDePagamento = "credito";
-      this.servicos.fecharConta();
+
+      this.fechar()
     } catch (error) {
       alert(error);
     }
@@ -61,7 +63,7 @@ export class FecharContaPage {
   confirmarPagamentoDebito() {
     try {
       this.servicos.pedidoEmAndamento.solicitacaoDeFechamento.formaDePagamento = "debito";
-      this.servicos.fecharConta();
+      this.fechar();
     } catch (error) {
       alert(error);
     }
@@ -70,10 +72,25 @@ export class FecharContaPage {
   confirmarPagamentoAVista() {
     try {
       this.servicos.pedidoEmAndamento.solicitacaoDeFechamento.formaDePagamento = "avista";
-      this.servicos.fecharConta();
+      this.fechar();
     } catch (error) {
       alert(error);
     }
+  }
+
+  fechar() {
+
+    this.servicos.somarConta();
+
+    var total = "R$ " + this.servicos.pedidoEmAndamento.solicitacaoDeFechamento.valorTotal.toFixed(2).replace(".",",");
+
+    let confirmacao = confirm('O total da sua conta é ' + total + '\n deseja fechar a conta?');
+
+    if (confirmacao) {
+      this.servicos.fecharConta();
+      alert('Solicitação enviada, aguarde para efetuar o pagamento!')
+    }
+
   }
 
 }

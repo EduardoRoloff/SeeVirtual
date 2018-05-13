@@ -136,7 +136,7 @@ export class ComandaPage {
 
     this.servicos.pedidoEmAndamento.emailDoCliente = this.autenticacaoService.clienteLogado.usuario;
     this.servicos.pedidoEmAndamento.horaDoPedido = new Date();
-    this.servicos.pedidoEmAndamento.mesa = this.servicos.pedidoEmAndamento.mesa;
+    this.servicos.pedidoEmAndamento.mesa = this.servicos.pedidoEmAndamento.pedidoEmAberto ? this.servicos.pedidoEmAndamento.mesa : this.servicos.mesaSelecionada;
     this.servicos.pedidoEmAndamento.pedidoEmAberto = true;
 
     this.navCtrl.push(ConfirmarPedidoPage);

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ComandaPage } from '../comanda/comanda';
 import { Empresa } from '../../models/empresa';
-import { Mesa } from '../../models/mesa';
 import { ServicosProvider } from '../../providers/servicos/servicos';
 
 /**
@@ -19,7 +18,7 @@ import { ServicosProvider } from '../../providers/servicos/servicos';
 })
 export class MesasPage {
   empresaSelecionada: Empresa;
-  mesas: Mesa[] = [];
+  mesas: string[] = [];
 
 
   constructor(
@@ -28,20 +27,16 @@ export class MesasPage {
     private servico: ServicosProvider
   ) {
     
-    this.mesas = new Array<Mesa>();
     this.servico.empresaSelecionda;
-    for (let index = 0; index <  this.servico.empresaSelecionda.quantidadeDeMesas; index++) {
-      var novaMesa = new Mesa();
-      novaMesa.numero = ''+index;
-      this.mesas.push(novaMesa);
-      
+    for (let index = 1; index <  this.servico.empresaSelecionda.quantidadeDeMesas; index++) {
+      this.mesas.push(''+index);
     }
   }
 
   ionViewDidLoad() {
   }
 
-  abrirComanda(mesa: Mesa){
+  abrirComanda(mesa: string){
     this.servico.selecionarMesa(mesa);
     this.navCtrl.push(ComandaPage, {empresa: this.servico.empresaSelecionda.itens});
   }

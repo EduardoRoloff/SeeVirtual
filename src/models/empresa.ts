@@ -1,6 +1,7 @@
 import { Login } from "./login";
 import { Item } from "./item";
 import { Pedido } from './pedido';
+import { AdditionalValues } from "./additional-values";
 
 export class Empresa {
 
@@ -21,6 +22,7 @@ export class Empresa {
     itens: Item[];
     quantidadeDeMesas: number;
     pedidos:Pedido[];
+    valoresAdicionais:AdditionalValues[]
 
     constructor() {
         this.telefones = new Array;
