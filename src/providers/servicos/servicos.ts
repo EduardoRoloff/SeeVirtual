@@ -180,7 +180,8 @@ export class ServicosProvider {
     if (this.pedidoEmAndamento.pedidoEmAberto) {
       throw new Error("Ainda existem pedidos em aberto!");
     }
-
+     
+    this.pedidoEmAndamento.solicitacaoDeFechamento.pago= false;
     let path = this.EMPRESAS + '/' + this.empresaSelecionda.$key + '/pedidos/' + this.pedidoEmAndamento.numeroDoPedido + '/solicitacaoDeFechamento/';
     this.db.object(path).set({ ...this.pedidoEmAndamento.solicitacaoDeFechamento });
   }
