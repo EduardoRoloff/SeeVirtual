@@ -98,48 +98,54 @@ export class ComandaPage {
   }
 
   confirmarPedido() {
+    try {
 
-    let itens = [
-      ...this.comidas,
-      ...this.bebidas,
-      ...this.outros
-    ].filter(i => i.escolhido);
+      let itens = [
+        ...this.comidas,
+        ...this.bebidas,
+        ...this.outros
+      ].filter(i => i.escolhido);
 
-    itens.forEach(element => {
-      let itemJaExistente = false;
-      if (this.servicos.pedidoEmAndamento.itens) {
-        for (let i = 0; i < this.servicos.pedidoEmAndamento.itens.length; i++) {
-          if (element.item.codigo == this.servicos.pedidoEmAndamento.itens[i].item.codigo) {
-            if (!this.servicos.pedidoEmAndamento.itens[i].antendido) {
-              this.servicos.pedidoEmAndamento.itens[i].quantidade
-                = this.servicos.pedidoEmAndamento.itens[i].quantidade + element.quantidade;
-              itemJaExistente = true;
+      itens.forEach(element => {
+        let itemJaExistente = false;
+        if (this.servicos.pedidoEmAndamento.itens) {
+          for (let i = 0; i < this.servicos.pedidoEmAndamento.itens.length; i++) {
+            if (element.item.codigo == this.servicos.pedidoEmAndamento.itens[i].item.codigo) {
+              if (!this.servicos.pedidoEmAndamento.itens[i].antendido) {
+                this.servicos.pedidoEmAndamento.itens[i].quantidade
+                  = this.servicos.pedidoEmAndamento.itens[i].quantidade + element.quantidade;
+                itemJaExistente = true;
+              }
             }
           }
         }
+
+        if (!itemJaExistente)
+          this.servicos.pedidoEmAndamento.itens.push(element);
+      });
+
+
+      if (this.servicos.pedidoEmAndamento.itens.length == 0) {
+        let alerta = this.alertCtrl.create({
+          title: 'Não foi selecionado nenhum item!',
+          subTitle: 'Para continuar selecione alguns itens!',
+          buttons: ['OK']
+        });
+        alerta.present();
+        return;
       }
 
-      if (!itemJaExistente)
-        this.servicos.pedidoEmAndamento.itens.push(element);
-    });
+      this.servicos.pedidoEmAndamento.emailDoCliente = this.autenticacaoService.clienteLogado.usuario;
+      this.servicos.pedidoEmAndamento.horaDoPedido = new Date();
+      this.servicos.pedidoEmAndamento.mesa = this.servicos.pedidoEmAndamento.pedidoEmAberto ? this.servicos.pedidoEmAndamento.mesa : this.servicos.mesaSelecionada;
+      this.servicos.pedidoEmAndamento.pedidoEmAberto = true;
 
+      this.navCtrl.push(ConfirmarPedidoPage);
+      // this.servicos.alterarMesa(this.servicos.mesaSelecionada);
 
-    if (this.servicos.pedidoEmAndamento.itens.length == 0) {
-      let alerta = this.alertCtrl.create({
-        title: 'Não foi selecionado nenhum item!',
-        subTitle: 'Para continuar selecione alguns itens!',
-        buttons: ['OK']
-      });
-      alerta.present();
-      return;
+    } catch (error) {
+      alert(error)
+      console.log(error);
     }
-
-    this.servicos.pedidoEmAndamento.emailDoCliente = this.autenticacaoService.clienteLogado.usuario;
-    this.servicos.pedidoEmAndamento.horaDoPedido = new Date();
-    this.servicos.pedidoEmAndamento.mesa = this.servicos.pedidoEmAndamento.pedidoEmAberto ? this.servicos.pedidoEmAndamento.mesa : this.servicos.mesaSelecionada;
-    this.servicos.pedidoEmAndamento.pedidoEmAberto = true;
-
-    this.navCtrl.push(ConfirmarPedidoPage);
-    // this.servicos.alterarMesa(this.servicos.mesaSelecionada);
   }
 }

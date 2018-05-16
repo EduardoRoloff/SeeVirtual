@@ -45,9 +45,8 @@ export class VisualizarComandaPage {
   }
 
   listarPedidos() {
-    this.pedidos = Object.values(this.servicos.itens);
-    for (let i = 0; i < this.pedidos.length; i++) {
-      this.pedidos[i].forEach(element => {
+    this.pedidos = this.servicos.listaDaComanda;
+      this.pedidos.forEach(element => {
         switch (element.item.tipo.toLowerCase()) {
           case tipos.COMIDA:
             this.comidas.push(element);
@@ -60,7 +59,7 @@ export class VisualizarComandaPage {
             this.outros.push(element);
         }
       });
-    }
+    
 
   }
 

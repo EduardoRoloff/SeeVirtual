@@ -2,14 +2,10 @@ import { Adicionais } from "./adicionais";
 
 export class SolicitacaoDeFechamento {
 
-    //PEDIDO NÃO PODE ESTAR EM ABERTO
-
-    /**
-     *
-     */
     constructor() {
         this.adicionais = [];
-        
+        this.pago = false;
+        this.solicitado = false;
     }
 
     formaDePagamento: string;
@@ -18,4 +14,5 @@ export class SolicitacaoDeFechamento {
     valorTotalAdicionais: number;
     adicionais: Adicionais[];
     pago: boolean;
+    solicitado:boolean;
 }

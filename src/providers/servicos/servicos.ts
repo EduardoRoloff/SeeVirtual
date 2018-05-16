@@ -23,7 +23,7 @@ export class ServicosProvider {
   listaDaComanda: ItemPedido[];
 
   empresaFoiSelecionada: boolean;
-  itens = {};
+  itens: ItemPedido[] = [];
 
   constructor(private db: AngularFireDatabase,
     private servicoLogin: AutenticacaoServiceProvider) {
@@ -31,12 +31,11 @@ export class ServicosProvider {
     this.getList()
 
   }
-
   recarregarPedido() {
     if (this.empresaFoiSelecionada)
       this.buscarEmpresaSelecionada(this.empresaSelecionda)
   }
-
+  
   obterPedidoDoUsuario(chaveDopedido: string) {
 
     let ref = this.db.database.ref('empresas/' + this.empresaSelecionda.$key + '/pedidos');
@@ -51,7 +50,7 @@ export class ServicosProvider {
 
   preecherListaDaComanda() {
     let listaAtendidos = this.pedidoEmAndamento.itens.filter(c => c.antendido);
-    this.agruparListaDoPedido(listaAtendidos);
+    //this.agruparListaDoPedido(listaAtendidos);
     this.listaDaComanda = listaAtendidos;
   }
 
@@ -162,9 +161,6 @@ export class ServicosProvider {
     pedidoDoCliente.dataPedido = this.pedidoEmAndamento.horaDoPedido;
     pedidoDoCliente.empresa = this.empresaSelecionda.$key;
 
-
-
-
     let path = this.CLIENTES + '/' + this.servicoLogin.clienteLogado.$key + '/' + '/pedidos/' + pedidoDoCliente.numero;
     this.db.object(path).set({ ...pedidoDoCliente });
   }
@@ -180,6 +176,7 @@ export class ServicosProvider {
     }
      
     this.pedidoEmAndamento.solicitacaoDeFechamento.pago= false;
+    this.pedidoEmAndamento.solicitacaoDeFechamento.solicitado= true;
     let path = this.EMPRESAS + '/' + this.empresaSelecionda.$key + '/pedidos/' + this.pedidoEmAndamento.numeroDoPedido + '/solicitacaoDeFechamento/';
     this.db.object(path).set({ ...this.pedidoEmAndamento.solicitacaoDeFechamento });
   }
@@ -223,6 +220,9 @@ export class ServicosProvider {
       var adicional = new Adicionais();
       adicional.descricao = add.descricao;
       adicional.valor = add.valor;
+      if(!this.pedidoEmAndamento.solicitacaoDeFechamento.adicionais){
+        this.pedidoEmAndamento.solicitacaoDeFechamento.adicionais = [];
+      }
       this.pedidoEmAndamento.solicitacaoDeFechamento.adicionais.push(adicional);
     })
 
