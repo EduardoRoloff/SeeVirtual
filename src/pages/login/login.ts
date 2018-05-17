@@ -41,13 +41,16 @@ export class LoginPage {
   }
 
   logar(){
+    let toast = this.toastCtrl.create({duration: 3000, position: 'bottom'});
+    try {
+      
     if (this.form.form.valid) {
       this.autenticacaoService.logar(this.usuario)
         .then(() => {
           this.navCtrl.setRoot(HomePage);
         })
         .catch((error: any) => {
-          let toast = this.toastCtrl.create({duration: 3000, position: 'bottom'});
+         
           if (error.code == 'auth/invalid-email') {
             toast.setMessage('O e-mail digitado não é valido.');
           } else if (error.code == 'auth/user-disabled') {
@@ -59,6 +62,9 @@ export class LoginPage {
           }
           toast.present(); //exibir mensagem
         });
+    }
+    } catch (error) {
+      toast.setMessage(error);
     }
   }
 

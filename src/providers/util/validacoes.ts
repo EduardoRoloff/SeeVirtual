@@ -4,6 +4,7 @@ import { Erros } from './erros';
 export class Validacoes {
 
 
+
     erros: Erros[] = [];
     static validacoes: Validacoes;
     private constructor() {
@@ -21,14 +22,12 @@ export class Validacoes {
     }
 
     validarUsuario(usuario: Usuario) {
-
         if (!usuario.email)
-            this.erros.push(new Erros('email', 'Email não foi informado!'));
+            throw new Error("Email não foi informado!");
         if (!usuario.senha || usuario.senha.length < 6)
-            this.erros.push(new Erros('senha', 'Senha não infomada ou muito curta!'));
-
+            throw new Error("Senha não infomada ou muito curta!");
     }
-    addExcessao(tipo:string, mensagem:string){
+    addExcessao(tipo: string, mensagem: string) {
         this.erros.push(new Erros(tipo, mensagem));
     }
 

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { ComandaPage } from '../comanda/comanda';
 import { VisualizarComandaPage } from '../visualizar-comanda/visualizar-comanda';
 import { ServicosProvider } from '../../providers/servicos/servicos';
+import { MesasPage } from '../mesas/mesas';
 
 /**
  * Generated class for the StatusPedidoPage page.
@@ -31,7 +32,11 @@ export class StatusPedidoPage {
   }
 
   fazerNovoPedido(){
-    this.navCtrl.push(ComandaPage);
+    if(this.servicos.pedidoEmAndamento.mesa || this.servicos.mesaSelecionada){
+      this.navCtrl.push(ComandaPage);
+    }else{
+      this.navCtrl.push(MesasPage);
+    }
   }
 
   visualizarComanda(){

@@ -45,7 +45,11 @@ export class VisualizarComandaPage {
   }
 
   listarPedidos() {
-    this.pedidos = this.servicos.listaDaComanda;
+    try {
+      if (!this.servicos.listaDaComanda) {
+        return;
+      }
+      this.pedidos = this.servicos.listaDaComanda;
       this.pedidos.forEach(element => {
         switch (element.item.tipo.toLowerCase()) {
           case tipos.COMIDA:
@@ -59,7 +63,11 @@ export class VisualizarComandaPage {
             this.outros.push(element);
         }
       });
-    
+
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
 
   }
 

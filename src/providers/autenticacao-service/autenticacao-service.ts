@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Usuario } from './usuario';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { ToastController } from 'ionic-angular';
 /*
   Generated class for the AutenticacaoServiceProvider provider.
 
@@ -17,7 +18,10 @@ export class AutenticacaoServiceProvider {
   private CLIENTES = 'clientes';
   private usuario: Usuario;
 
-  constructor(private angularFireAuth: AngularFireAuth, private db: AngularFireDatabase) {
+  constructor(private angularFireAuth: AngularFireAuth,
+    private db: AngularFireDatabase,
+    private toastCtrl: ToastController) {
+
     this.clientesList = this.db.list(this.CLIENTES);
     this.usuario = new Usuario();
     this.statusDoUsuario();
@@ -41,22 +45,49 @@ export class AutenticacaoServiceProvider {
   }
 
   criarUsuario(usuario: Usuario) {
+    let toast = this.toastCtrl.create({ duration: 3000, position: 'bottom' });
     return new Promise((resolve, reject) => {
       this.angularFireAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
         .then((usuario) => {
           this.salvarCliente(usuario.email)
           resolve(usuario);
+        }).catch((error: any) => {
+
+          if (error.code == 'auth/invalid-email') {
+            toast.setMessage('O e-mail digitado não é valido.');
+          } else if (error.code == 'auth/user-disabled') {
+            toast.setMessage('O usuário está desativado.');
+          } else if (error.code == 'auth/user-not-found') {
+            toast.setMessage('O usuário não foi encontrado.');
+          } else if (error.code == 'auth/wrong-password') {
+            toast.setMessage('A senha digitada não é valida.');
+          }
         })
+        toast.present();
     })
   }
 
   logar(usuario: Usuario) {
+    let toast = this.toastCtrl.create({ duration: 3000, position: 'bottom' });
     return new Promise((resolve, reject) => {
       this.angularFireAuth.auth.signInWithEmailAndPassword(usuario.email, usuario.senha)
         .then((usuario) => {
           resolve(usuario);
+        }).catch((error: any) => {
+
+          if (error.code == 'auth/invalid-email') {
+            toast.setMessage('O e-mail digitado não é valido.');
+          } else if (error.code == 'auth/user-disabled') {
+            toast.setMessage('O usuário está desativado.');
+          } else if (error.code == 'auth/user-not-found') {
+            toast.setMessage('O usuário não foi encontrado.');
+          } else if (error.code == 'auth/wrong-password') {
+            toast.setMessage('A senha digitada não é valida.');
+          }
         })
+      toast.present();
     })
+
   }
 
   logout() {

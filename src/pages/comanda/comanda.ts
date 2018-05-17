@@ -91,10 +91,8 @@ export class ComandaPage {
   }
 
   adicionarMaisItem(itemPedido: ItemPedido) {
-    if (itemPedido.escolhido) {
-      itemPedido.quantidade++;
-      return;
-    }
+    itemPedido.quantidade++;
+    return;
   }
 
   confirmarPedido() {
@@ -112,8 +110,7 @@ export class ComandaPage {
           for (let i = 0; i < this.servicos.pedidoEmAndamento.itens.length; i++) {
             if (element.item.codigo == this.servicos.pedidoEmAndamento.itens[i].item.codigo) {
               if (!this.servicos.pedidoEmAndamento.itens[i].antendido) {
-                this.servicos.pedidoEmAndamento.itens[i].quantidade
-                  = this.servicos.pedidoEmAndamento.itens[i].quantidade + element.quantidade;
+                this.servicos.pedidoEmAndamento.itens[i].quantidade = element.quantidade;
                 itemJaExistente = true;
               }
             }
