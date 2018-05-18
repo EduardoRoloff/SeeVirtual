@@ -1,0 +1,26 @@
+<!--
+  Generated template for the ConfirmarPagamentoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>confirmar-pagamento</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="servico.pedidoEmAndamento.solicitacaoDeFechamento.pago">
+    <h1>Conta paga!</h1>
+    <br>
+    <h3>Você está liberado</h3>
+  </div>
+
+  <div *ngIf="!servico.pedidoEmAndamento.solicitacaoDeFechamento.pago">
+    <h1>Conta Pendente!</h1>
+  </div>
+</ion-content>

@@ -104,7 +104,7 @@ export class ServicosProvider {
     let pedido: PedidosCliente;
 
     if (pedidosDoCliente) {
-      pedido = pedidosDoCliente.find(c => c.status);
+      pedido = pedidosDoCliente.find(c => c.status && c.empresa == this.empresaSelecionda.$key);
     }
 
     if (!pedido) {
@@ -184,14 +184,17 @@ export class ServicosProvider {
   somarItens(): any {
     let total = 0;
     this.pedidoEmAndamento.itens.forEach(item => {
-      let valor = item.item.preco * item.quantidade;
+      let valor = parseFloat(item.item.preco+'') * parseFloat(item.quantidade+'');
       total = total + valor;
     })
-    this.pedidoEmAndamento.solicitacaoDeFechamento.valorTotal = total;
+    this.pedidoEmAndamento.solicitacaoDeFechamento.valorTotal = parseFloat(total+'');
   }
 
   somarValoresAdicionais(): any {
 
+    if(!this.empresaSelecionda.valoresAdicionais){
+      return;
+    }
     let adicionais = 0
 
     let adicionaisAtivos = this.empresaSelecionda.valoresAdicionais.filter(c => c.ativo);

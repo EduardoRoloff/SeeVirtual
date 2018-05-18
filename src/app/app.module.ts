@@ -1,3 +1,4 @@
+import { ConfirmarPagamentoPageModule } from './../pages/confirmar-pagamento/confirmar-pagamento.module';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -53,6 +54,7 @@ import { FecharContaPageModule } from '../pages/fechar-conta/fechar-conta.module
     StatusPedidoPageModule,
     VisualizarComandaPageModule,
     FecharContaPageModule,
+    ConfirmarPagamentoPageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule

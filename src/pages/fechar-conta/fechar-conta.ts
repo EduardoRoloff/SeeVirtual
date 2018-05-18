@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ServicosProvider } from '../../providers/servicos/servicos';
 import { SolicitacaoDeFechamento } from '../../models/solicitacao-de-fechamento';
+import { ConfirmarPagamentoPage } from '../confirmar-pagamento/confirmar-pagamento';
 
 /**
  * Generated class for the FecharContaPage page.
@@ -91,6 +92,10 @@ export class FecharContaPage {
       alert('Solicitação enviada, aguarde para efetuar o pagamento!')
     }
 
+  }
+
+  liberar(){
+    this.navCtrl.push(ConfirmarPagamentoPage);
   }
 
 }

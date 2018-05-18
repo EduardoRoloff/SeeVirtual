@@ -10,6 +10,16 @@
     <ion-title>Fechar Conta</ion-title>
   </ion-navbar>
 
+  <ion-toolbar no-border-top>
+    <ion-col text-right>
+      <button ion-button color="secondary" small (click)="liberar()">
+        Liberção
+        <ion-icon name='arrow-forward'></ion-icon>
+      </button>
+    </ion-col>
+  </ion-toolbar>
+
+
 </ion-header>
 
 
@@ -25,7 +35,7 @@
   </div> -->
 
   <ion-item>
-    <ion-label>Pagar gorjeta (10%)</ion-label>
+    <ion-label>Pagar 10%</ion-label>
     <ion-checkbox color="secondary" [(ngModel)]="servicos.pedidoEmAndamento.solicitacaoDeFechamento.pagarDezPorcento"></ion-checkbox>
   </ion-item>
 
