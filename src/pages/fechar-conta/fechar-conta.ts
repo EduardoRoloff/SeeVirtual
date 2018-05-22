@@ -89,7 +89,8 @@ export class FecharContaPage {
 
     if (confirmacao) {
       this.servicos.fecharConta();
-      alert('Solicitação enviada, aguarde para efetuar o pagamento!')
+      alert('Solicitação enviada, aguarde para efetuar o pagamento!');
+      this.liberar();
     }
 
   }
