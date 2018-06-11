@@ -33,6 +33,9 @@ export class HomePage {
 
   abrirComanda(empresa){
     this.servicos.buscarEmpresaSelecionada(empresa);
+    if(this.servicos.empresaSelecionda.valoresAdicionais){
+      alert('Este estabelecimento possue valores adicionais a serem somados na sua conta!')
+    }
     this.navCtrl.push(MesasPage);
   }
   
